@@ -44,6 +44,7 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 import rotp.Rotp;
 
+import rotp.mod.br.profiles.Profiles;
 import rotp.model.game.GameSession;
 import rotp.ui.BasePanel;
 import rotp.ui.NoticeMessage;
@@ -335,6 +336,11 @@ public final class LoadGameUI  extends BasePanel implements MouseListener, Mouse
             case KeyEvent.VK_L:
             case KeyEvent.VK_ENTER:
                 if (canSelect())
+                    loadGame(selectedFile);
+                return;
+            case KeyEvent.VK_X: // BR:
+                if (canSelect())
+                	Profiles.ChangeGameFile = true;
                     loadGame(selectedFile);
                 return;
             case KeyEvent.VK_TAB:

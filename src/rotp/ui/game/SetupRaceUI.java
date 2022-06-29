@@ -33,6 +33,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import javax.swing.JTextField;
+import rotp.mod.br.profiles.Profiles;
 import rotp.model.empires.Race;
 import rotp.ui.BasePanel;
 import rotp.ui.RotPUI;
@@ -470,11 +471,28 @@ public final class SetupRaceUI extends BasePanel implements MouseListener, Mouse
     public void keyPressed(KeyEvent e) {
         int k = e.getKeyCode();
         switch(k) {
+            case KeyEvent.VK_M: // BR: "M" = Go to Main Menu
             case KeyEvent.VK_ESCAPE:
                 goToMainMenu();
                 return;
             case KeyEvent.VK_ENTER:
                 goToGalaxySetup();
+                return;
+            default: // BR:
+            	if (Profiles.processKey(k, e.isShiftDown(), "Race",
+            							options(), newGameOptions())) {
+	            	buttonClick();
+	       			raceChanged();
+	       			repaint();
+       			}
+            	// Needs to be done twice for the case both Galaxy size
+            	// and the number of opponents were changed !?
+            	if (Profiles.processKey(k, e.isShiftDown(), "Race",
+						options(), newGameOptions())) {
+            		buttonClick();
+					raceChanged();
+					repaint();
+				}
                 return;
         }
     }

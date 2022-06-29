@@ -26,6 +26,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.List;
+import rotp.mod.br.profiles.Profiles;
 import rotp.ui.BasePanel;
 import rotp.ui.BaseText;
 import rotp.ui.main.SystemPanel;
@@ -597,9 +598,16 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         techTradingText.repaint(techTradingStr());
     }
 
+    // BR:
+    private void goToMainMenu() {
+        buttonClick();
+        close();
+        rotp.ui.RotPUI.instance().selectGamePanel();
+    } // \ BR:
     @Override
     public void keyPressed(KeyEvent e) {
-        switch(e.getKeyCode()) {
+        int k = e.getKeyCode(); // BR:
+        switch(k) {
             case KeyEvent.VK_ESCAPE:
                 close();
                 break;
@@ -607,7 +615,52 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
             case KeyEvent.VK_ENTER:
                 parent.advanceHelp();
                 break;
-        }
+            case KeyEvent.VK_M: // BR: "M" = Go to Main Menu
+                goToMainMenu();
+                break;
+            default: // BR:
+            	if (Profiles.processKey(k, e.isShiftDown(), "Advanced",
+            			options(), newGameOptions())) {
+                    buttonClick();
+                    galaxyAgeText.repaint(galaxyAgeStr());
+                    starDensityText.repaint(starDensityStr());
+                    aiHostilityText.repaint(aiHostilityStr());
+                    nebulaeText.repaint(nebulaeStr());
+                    randomEventsText.repaint(randomEventsStr());
+                    planetQualityText.repaint(planetQualityStr());
+                    terraformingText.repaint(terraformingStr());
+                    colonizingText.repaint(colonizingStr());
+                    councilWinText.repaint(councilWinStr());
+                    randomizeAIText.repaint(randomizeAIStr());
+                    autoplayText.repaint(autoplayStr());
+                    researchRateText.repaint(researchRateStr());
+                    warpSpeedText.repaint(warpSpeedStr());
+                    fuelRangeText.repaint(fuelRangeStr());
+                    techTradingText.repaint(techTradingStr());           		
+            	}
+            	// Needs to be done twice for the case both Galaxy size
+            	// and the number of opponents were changed !?
+            	if (Profiles.processKey(k, e.isShiftDown(), "Advanced",
+            			options(), newGameOptions())) {
+                    buttonClick();
+                    galaxyAgeText.repaint(galaxyAgeStr());
+                    starDensityText.repaint(starDensityStr());
+                    aiHostilityText.repaint(aiHostilityStr());
+                    nebulaeText.repaint(nebulaeStr());
+                    randomEventsText.repaint(randomEventsStr());
+                    planetQualityText.repaint(planetQualityStr());
+                    terraformingText.repaint(terraformingStr());
+                    colonizingText.repaint(colonizingStr());
+                    councilWinText.repaint(councilWinStr());
+                    randomizeAIText.repaint(randomizeAIStr());
+                    autoplayText.repaint(autoplayStr());
+                    researchRateText.repaint(researchRateStr());
+                    warpSpeedText.repaint(warpSpeedStr());
+                    fuelRangeText.repaint(fuelRangeStr());
+                    techTradingText.repaint(techTradingStr());           		
+            	}
+            return;
+       }
     }
     @Override
     public void mouseDragged(MouseEvent e) {  }

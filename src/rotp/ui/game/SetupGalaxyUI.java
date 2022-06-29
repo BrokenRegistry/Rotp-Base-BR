@@ -37,6 +37,8 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import javax.swing.SwingUtilities;
+import rotp.mod.br.AddOns.RacesOptions;
+import rotp.mod.br.profiles.Profiles;
 import rotp.model.empires.Race;
 import rotp.model.galaxy.GalaxyShape;
 import rotp.model.game.GameSession;
@@ -510,8 +512,18 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         RotPUI.instance().selectSetupRacePanel();
         release();
     }
+    // BR: Add option to return to the main menu
+    private void goToMainMenu() {
+        buttonClick();
+        RotPUI.instance().selectGamePanel();
+        release();
+    }
     public void startGame() {
         starting = true;
+        // BR:
+        if (Profiles.isStartOpponentRaceListEnabled()) {
+        	RacesOptions.loadStartingOpponents(newGameOptions());
+        }
         Race r = Race.keyed(newGameOptions().selectedPlayerRace());
         GameUI.gameName = r.setupName()+ " - "+text(newGameOptions().selectedGalaxySize())+ " - "+text(newGameOptions().selectedGameDifficulty());
         repaint();
@@ -806,13 +818,50 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
     public void keyPressed(KeyEvent e) {
         int k = e.getKeyCode();
         switch(k) {
-           case KeyEvent.VK_ESCAPE:
-                goToRaceSetup();
-                return;
-          case KeyEvent.VK_ENTER:
-                startGame();
-                return;
+        case KeyEvent.VK_ESCAPE:
+            goToRaceSetup();
+            return;
+        case KeyEvent.VK_ENTER:
+            startGame();
+            return;
+        case KeyEvent.VK_M: // BR: "M" = Go to Main Menu
+            goToMainMenu();
+            break;
+        default: // BR:
+        	if (Profiles.processKey(k, e.isShiftDown(), "Galaxy",
+        							options(), newGameOptions())) {
+            	buttonClick();
+                playerRaceImg = null;
+                playerRaceImg = playerRaceImg();
+                backImg = null;
+                repaint();
+        	}
+        	// Needs to be done twice for the case both Galaxy size
+        	// and the number of opponents were changed !?
+        	if (Profiles.processKey(k, e.isShiftDown(), "Galaxy",
+					options(), newGameOptions())) {
+				buttonClick();
+			    playerRaceImg = null;
+			    playerRaceImg = playerRaceImg();
+			    backImg = null;
+			    repaint();
+			}
+        	return;
         }
+    }
+    // BR:
+    /**
+     * Load Profiles with option "Surprise" and start Game
+     */
+    public void surpriseStart() {
+    	Profiles.processKey(KeyEvent.VK_R, true, "Galaxy",
+				options(), newGameOptions());
+		buttonClick();
+	    repaint();
+    	Profiles.processKey(KeyEvent.VK_R, true, "Galaxy",
+				options(), newGameOptions());
+	    repaint();
+	    startGame();
     }
     @Override
     public void mouseDragged(MouseEvent e) {  }

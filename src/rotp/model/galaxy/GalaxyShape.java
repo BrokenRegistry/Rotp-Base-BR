@@ -19,6 +19,8 @@ import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import rotp.mod.br.AddOns.GalaxyOptions;
+import rotp.mod.br.profiles.Profiles;
 import rotp.model.game.IGameOptions;
 import rotp.util.Base;
 
@@ -152,6 +154,14 @@ public abstract class GalaxyShape implements Base, Serializable {
         float minEmpireBuffer = 3*sysBuffer;
         float maxMinEmpireBuffer = 15*sysBuffer;
         float minOrionBuffer = 4*sysBuffer;
+        // BR:
+        if (Profiles.isSpacingEnabled()) {
+        	GalaxyOptions.initSpacing(maxStars, numOpps, sysBuffer);
+            minEmpireBuffer    = GalaxyOptions.getMinEmpireBuffer();
+            maxMinEmpireBuffer = GalaxyOptions.getMaxMinEmpireBuffer();
+            minOrionBuffer     = GalaxyOptions.getMinOrionBuffer();
+        }
+        // \BR:
         
         // the stars/empires ratio for the most "densely" populated galaxy is about 8:1
         // we want to set the minimum distance between empires to half that in ly, with a minimum 

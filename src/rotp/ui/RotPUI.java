@@ -33,6 +33,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import rotp.Rotp;
+import rotp.mod.br.profiles.BR_Main;
 import rotp.model.colony.Colony;
 import rotp.model.combat.ShipCombatManager;
 import rotp.model.empires.Empire;
@@ -273,6 +274,7 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
     }
     private void init() {
         initModel();
+        BR_Main.initBR(options()); // BR:
         addKeyListener(this);
         if (startupException != null)
             selectErrorPanel(startupException);
@@ -320,6 +322,10 @@ public class RotPUI extends BasePanel implements ActionListener, KeyListener {
     public void selectCurrentPanel()   { selectPanel(currentPane, selectedPanel); }
 
     // PLAYER-TRIGGERED ACTIONS
+    /**
+     * Load Profiles with option "Surprise" and start Game
+     */
+    public void surpriseStart()        { setupGalaxyUI.surpriseStart(); } // BR:
     public void selectSetupRacePanel() { setupRaceUI.init(); selectPanel(SETUP_RACE_PANEL, setupRaceUI);  }
     public void selectSetupGalaxyPanel() { setupGalaxyUI.init(); selectPanel(SETUP_GALAXY_PANEL, setupGalaxyUI);  }
     public void selectLoadGamePanel()  { loadGameUI.init(); selectPanel(LOAD_PANEL, loadGameUI);  }
