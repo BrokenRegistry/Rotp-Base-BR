@@ -3,17 +3,31 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <artifactId>RotP</artifactId>
+    <artifactId>rotp</artifactId>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.rayfowler</groupId>
 
     <version>2022.06.29</version>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>8</java.version>
-                                     
+        <GITHUB_TOKEN></GITHUB_TOKEN>                      
     </properties>
+
+    <scm>
+        <connection>scm:git:${project.scm.url}</connection>
+        <developerConnection>scm:git:${project.scm.url}</developerConnection>
+        <url>https://github.com/BrokenRegistry/Rotp-Base-BR.git</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>BrokenRegistry</name>
+            <url>https://maven.pkg.github.com/BrokenRegistry/Rotp-Base-BR</url>
+        </repository>
+    </distributionManagement>
 
     <pluginRepositories>
         <pluginRepository>
