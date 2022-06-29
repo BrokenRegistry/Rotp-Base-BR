@@ -44,6 +44,7 @@ import rotp.model.ships.Design;
 import rotp.model.ships.ShipDesign;
 import rotp.model.ships.ShipLibrary;
 import rotp.ui.BasePanel;
+import rotp.ui.UserPreferences;
 import rotp.ui.main.GalaxyMapPanel;
 import rotp.ui.sprites.ShipRelocationSprite;
 import rotp.ui.sprites.SystemTransportSprite;

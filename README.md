@@ -20,3 +20,5 @@ Download build: https://rayfowler.itch.io/remnants-of-the-precursors
   - Copy of 1.04 Vanilla code
   - Added Profiles Manager
   - Added add-ons
+  - Debug multiple actions
+  

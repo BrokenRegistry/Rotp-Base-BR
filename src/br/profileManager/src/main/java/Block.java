@@ -357,7 +357,7 @@ class Block<T, V extends Validation<T>> extends WriteUtil {
 		List<String> profiles = new ArrayList<String>();
 		if (category != null) {
 			for (Lines<T, Validation<T>> line : lineList) {
-				if (line.isValueFromCategory(category)) {
+				if (line.isUserEntryFromCategory(category)) {
 					profiles.add(line.getName());
 				}
 			}

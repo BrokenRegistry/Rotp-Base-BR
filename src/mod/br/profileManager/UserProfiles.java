@@ -36,7 +36,7 @@ public class UserProfiles extends AbstractProfiles<ClientClasses> {
 	}
 	
 	private static final String BR_GROUP_NAME = "BR";
-	static final BaseMod baseMod = BaseMod.Modnar;
+	static final BaseMod baseMod = BaseMod.Original;
 	
 	// ==================================================
 	// Constructors and helpers
@@ -128,8 +128,8 @@ public class UserProfiles extends AbstractProfiles<ClientClasses> {
       groupMap.put("RACE",        new Group_Race(options));
       groupMap.put("GALAXY",      new Group_Galaxy(options));
       groupMap.put("ADVANCED",    new Group_Advanced(options));
-      groupMap.put("MODNAR",      new Group_Modnar(options));
-      groupMap.put("GOVERNOR",    new Group_Governor(options));
+//      groupMap.put("MODNAR",      new Group_Modnar(options));
+//      groupMap.put("GOVERNOR",    new Group_Governor(options));
       groupMap.put(BR_GROUP_NAME, new Group_BrokenRegistry(options));
 	}
 
@@ -163,7 +163,7 @@ public class UserProfiles extends AbstractProfiles<ClientClasses> {
 
 		parameterProfileAction().addLine("Vanilla"
 				, ACTION_DEFAULT_TO_FILE
-				, "remove the settings you don't want vinilla, replace "
+				, "remove the settings you don't want vanilla, replace "
 				+ ACTION_DEFAULT_TO_FILE + " by " + ACTION_DEFAULT_UPDATE_FILE
 				+ " and " + ACTION_FILE_TO_GUI
 				+ " to keep some vanilla configuration");
@@ -217,6 +217,6 @@ public class UserProfiles extends AbstractProfiles<ClientClasses> {
 				, "Range = Rare .. Common (first option = 0)");	
 		getParameter("AI HOSTILITY").addLine("MyRandom"
 				, random + " 0, 3");
-		getParameter("ALWAYS STAR GATES").addLine("MyRandom", "Yes", "Not Random!");
+//		getParameter("ALWAYS STAR GATES").addLine("MyRandom", "Yes", "Not Random!");
 	}
 }

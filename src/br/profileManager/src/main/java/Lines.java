@@ -264,6 +264,18 @@ public class Lines<T, V extends Validation<T>>
 	boolean isValidValue() { 
 		return entryValue.isValidValue();
 	}
+	
+	/**
+	 * Test if the user Entry is part of the category
+	 * @param category the {@code String} category to filter with
+	 * @return as {@code boolean} never null
+	 */
+	boolean isUserEntryFromCategory(String category) {
+		if (getValueAsEntry() == null) {
+			return false;
+		}
+		return getValidationData().isValidUserView(getValue().getUserEntry(), category);
+	}
 
 	/**
 	 * Test if the value is part of the category

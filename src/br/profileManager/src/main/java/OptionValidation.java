@@ -295,6 +295,21 @@ class OptionValidation<T> extends WriteUtil {
 	}
 	/**
 	 * Test if the user view is part of the category validation list
+	 * @param userEntry the user view to check
+	 * @param category the filter to apply
+	 */
+	protected boolean isValidUserView(String UserView, String category) {
+		if (UserView != null) {
+			for (Options<T> element : optionList()) {
+				if (element.isValidUserView(UserView, category, getCriteria())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	/**
+	 * Test if the user view is part of the category validation list
 	 * @param codeView the user view to check
 	 * @param category the filter to apply
 	 */
