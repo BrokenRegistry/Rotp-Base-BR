@@ -15,6 +15,7 @@ Community subreddit: https://www.reddit.com/r/rotp/<br/>
 Download build: https://rayfowler.itch.io/remnants-of-the-precursors
 
 ## What'New
+
 2026.07.01
   - Junit test integration
   - Pom file normalization
