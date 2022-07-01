@@ -13,7 +13,7 @@
     <!-- Variables Declaration -->
     <properties>
     	<!-- Personal -->
-    	<RepoId>Rotp-C-M-X-BR</RepoId>
+    	<RepoId>Rotp-Base-BR</RepoId>
     	<AuthorId>BrokenRegistry</AuthorId>
     	<BaseFileName>rotp-${project.version}</BaseFileName>
      	<!-- Maven Standard -->
@@ -257,7 +257,6 @@
                                 <!-- When launching full version, run Rotp directly, no need to go via RotpGovernor main -->
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <!-- <mainClass>rotp.RotpGovernor</mainClass> -->
                                     <mainClass>rotp.Rotp</mainClass>
                                     <manifestEntries>
                                         <Built-By>${AuthorId}</Built-By>
@@ -325,7 +324,6 @@
                             <jar>target/${BaseFileName}-mini.jar</jar>
                             <errTitle>ROTP</errTitle>
                             <classPath>
-                                <!-- <mainClass>rotp.RotpGovernor</mainClass> -->
                                 <mainClass>rotp.Rotp</mainClass>
                                 <addDependencies>false</addDependencies>
                                 <preCp>anything</preCp>
@@ -355,24 +353,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- package a jar with governor classes only -->
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <appendAssemblyId>true</appendAssemblyId>
-                            <descriptors>
-                                <descriptor>src/assembly/windows.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+
             <!-- runs with github-release:github-release -->
             <plugin>
                 <groupId>com.ragedunicorn.tools.maven</groupId>
@@ -386,14 +367,11 @@
                             <repository>${RepoId}</repository>
                             <authToken>${GITHUB_TOKEN}</authToken>
                             <tagName>${project.version}</tagName>
-                            <!-- <name>${RepoId} ${project.version}</name> -->
                             <name>${BaseFileName}</name>
                             <targetCommitish>main</targetCommitish>
                             <releaseNotes>target/classes/README.md</releaseNotes>
                             <assets>
                                 <asset>target/${BaseFileName}.jar</asset>
-                                <asset>target/${BaseFileName}-mini.jar</asset>
-                                <asset>target/${BaseFileName}-windows.zip</asset>
                                 <!-- <asset>Profiles.pdf</asset> -->
                             </assets>
                         </configuration>

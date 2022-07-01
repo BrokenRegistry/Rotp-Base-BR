@@ -36,7 +36,7 @@ public class UserProfiles extends AbstractProfiles<ClientClasses> {
 	}
 	
 	private static final String BR_GROUP_NAME = "BR";
-	static final BaseMod baseMod = BaseMod.Original;
+	static final BaseMod baseMod = BaseMod.BrokenRegistry;
 	
 	// ==================================================
 	// Constructors and helpers
@@ -217,6 +217,6 @@ public class UserProfiles extends AbstractProfiles<ClientClasses> {
 				, "Range = Rare .. Common (first option = 0)");	
 		getParameter("AI HOSTILITY").addLine("MyRandom"
 				, random + " 0, 3");
-//		getParameter("ALWAYS STAR GATES").addLine("MyRandom", "Yes", "Not Random!");
+		getParameter("ALWAYS STAR GATES").addLine("MyRandom", "Yes", "Not Random!");
 	}
 }
