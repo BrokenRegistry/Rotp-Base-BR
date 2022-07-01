@@ -36,8 +36,7 @@ import rotp.model.tech.TechEngineWarp;
 import rotp.ui.game.SetupGalaxyUI;
 import rotp.ui.UserPreferences;
 import rotp.util.Base;
-import rotp.mod.br.AddOns.GalaxyOptions;
-import rotp.mod.br.AddOns.RacesOptions;
+import rotp.mod.br.AddOns.GalaxyOptions; // BR:
 import rotp.mod.br.profiles.Profiles; // BR:
 
 public class MOO1GameOptions implements Base, IGameOptions, Serializable {
@@ -239,13 +238,27 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     }
     @Override
     public int maximumOpponentsOptions() {
-        int maxEmpires = min(numberStarSystems()/8, colors.size(), MAX_OPPONENT_TYPE*startingRaceOptions().size());
+    	// BR: customize min Star per empire
+    	int minStarsPerEmpire = 8;
+    	if (Profiles.isMinStarsPerEmpireEnabled()) {
+    		minStarsPerEmpire = GalaxyOptions.getMinStarsPerEmpire();
+    	}
+        int maxEmpires = min(numberStarSystems()/minStarsPerEmpire
+        		, colors.size(), MAX_OPPONENT_TYPE*startingRaceOptions().size());
+        // \BR:
         int maxOpponents = min(SetupGalaxyUI.MAX_DISPLAY_OPPS);
         return min(maxOpponents, maxEmpires-1);
     }
     @Override
     public int defaultOpponentsOptions() {
-        int maxEmpires = min((int)Math.ceil(numberStarSystems()/16f), colors.size(), MAX_OPPONENT_TYPE*startingRaceOptions().size());
+    	// BR: customize preferred Star per empire
+    	float prefStarsPerEmpire = 16f;
+    	if (Profiles.isPreferredStarsPerEmpireEnabled()) {
+    		prefStarsPerEmpire = GalaxyOptions.getPreferredStarsPerEmpire();
+    	}
+        int maxEmpires = min((int)Math.ceil(numberStarSystems()/prefStarsPerEmpire)
+        		, colors.size(), MAX_OPPONENT_TYPE*startingRaceOptions().size());
+        // \BR:
         int maxOpponents = min(SetupGalaxyUI.MAX_DISPLAY_OPPS);
         return min(maxOpponents, maxEmpires-1);
     }
@@ -502,6 +515,10 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
             case GALAXY_AGE_OLD:    pcts = oldPcts; break;
             default:                pcts = normalPcts; break;
         }
+        // BR: distribution modifier
+        if (Profiles.isStarProbabilityEnabled()) {
+        	pcts = GalaxyOptions.modifyStarProbability(pcts);
+        } // \BR:
         float r = random();
         for (int i=0;i<pcts.length;i++) {
             if (r <= pcts[i]) {
@@ -576,10 +593,10 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         int typeIndex = 0;
         switch (s.starType().key()) {
             case StarType.RED:    pcts = redPcts;    break;
-            case StarType.ORANGE:  pcts = greenPcts;  break;
+            case StarType.ORANGE: pcts = greenPcts;  break;
             case StarType.YELLOW: pcts = yellowPcts; break;
             case StarType.BLUE:   pcts = bluePcts;   break;
-            case StarType.WHITE:  pcts = whitePcts; break;
+            case StarType.WHITE:  pcts = whitePcts;  break;
             case StarType.PURPLE: pcts = purplePcts; break;
             default:
                 pcts = redPcts; break;

@@ -13,8 +13,21 @@
             <includes>
                 <include>**/*.class</include>
                 <include>**/*.txt</include>
+                <include>**/rotp-version.properties</include>
             </includes>
+            <excludes> <!-- this class should come from original game jar -->
+                <exclude>**/Rotp.class</exclude>
+                <exclude>**/Rotp$1.class</exclude>
+            </excludes>
             <outputDirectory>/</outputDirectory>
         </fileSet>
     </fileSets>
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>/</outputDirectory>
+            <useProjectArtifact>false</useProjectArtifact>
+            <unpack>true</unpack>
+            <scope>runtime</scope>
+        </dependencySet>
+    </dependencySets>
 </assembly>
