@@ -19,14 +19,11 @@ class Group_GalaxyTest {
 	
 	private String galaxyShapePrt = 
 			"\r\n"
-			+ ";  \r\n"
-			+ "; ------------- Galaxy Options -------------\r\n"
-			+ "; \r\n"
 			+ "¦==== Parameter : GALAXY SHAPE\r\n"
 			+ "; Options       : [Rectangle, Ellipse, Spiral]\r\n"
 			+ "¦ History       : Current: Rectangle ¦ Last:  ¦ Initial: Rectangle\r\n"
 			+ "¦ History       : Default: Rectangle ¦ Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -41,7 +38,7 @@ class Group_GalaxyTest {
 			+ ";   \" \"         : Insane, Ludicrous, Maximum]\r\n"
 			+ "¦ History       : Current: Small ¦ Last:  ¦ Initial: Small ¦ Default: Small\r\n"
 			+ "¦ History       : Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -54,7 +51,7 @@ class Group_GalaxyTest {
 			+ "; Options       : [Easiest, Easier, Easy, Normal, Hard, Harder, Hardest]\r\n"
 			+ "¦ History       : Current: Normal ¦ Last:  ¦ Initial: Normal ¦ Default: Easy\r\n"
 			+ "¦ History       : Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -67,7 +64,7 @@ class Group_GalaxyTest {
 			+ "; Options       : [Base, Xilmi, Select]\r\n"
 			+ "¦ History       : Current: Base ¦ Last:  ¦ Initial: Base ¦ Default: Base\r\n"
 			+ "¦ History       : Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -79,7 +76,7 @@ class Group_GalaxyTest {
 			+ "¦==== Parameter : NB OPPONENTS\r\n"
 			+ "; Options       : [Min=0, Max=15, Rnd Low=1, Rnd Up=15]\r\n"
 			+ "¦ History       : Current: 4 ¦ Last:  ¦ Initial: 4 ¦ Default: 3 ¦ Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -96,7 +93,7 @@ class Group_GalaxyTest {
 			+ "¦ History       : Initial : Human/Alkari/Silicoid/Mrrshan/Klackon/Meklar/Psilon/Darlok/Sakkra/Bulrathi\r\n"
 			+ "¦ History       : Default : Human/Alkari/Silicoid/Mrrshan/Klackon/Meklar/Psilon/Darlok/Sakkra/Bulrathi\r\n"
 			+ "¦ History       : Game : \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       : \r\n"
 			+ "Random          : \r\n"
@@ -140,16 +137,6 @@ class Group_GalaxyTest {
 		String out = param.toString(List.of("Profile 1", "Random"));
 		String shouldBe = nbOpponentPrt;
 		assertEquals(shouldBe, out, "should have been equals");
-	}
-
-	@Test void profileList_None() {
-		Group_Galaxy group;
-		group = new Group_Galaxy(cct);
-		assertEquals("[GALAXY SHAPE, GALAXY SIZE, DIFFICULTY, OPPONENT AI"
-				+ ", NB OPPONENTS, GUI RACE FILTER, GAME RACE FILTER"
-				+ ", GUI PRESET OPPONENT, START PRESET OPPONENT]",
-				group.profileList().toString(),
-				"should have been a long list");
 	}
 
 	@Test void getParameter_String() {

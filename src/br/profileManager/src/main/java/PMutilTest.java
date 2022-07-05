@@ -288,12 +288,6 @@ class PMutilTest {
 				, "should have been «Source»");
 		assertEquals("Source", suggestedUserViewFromCodeView("VERY_OPTION_SOURCE")
 				, "should have been «Source»");
-		assertEquals("Source", suggestedUserViewFromCodeView("OPTION__SOURCE")
-				, "should have been «Source»");
-		assertEquals("Source", suggestedUserViewFromCodeView("_SOURCE")
-				, "should have been «Source»");
-		assertEquals("Source", suggestedUserViewFromCodeView("__SOURCE")
-				, "should have been «Source»");
 	}
 
 	// ==================================================

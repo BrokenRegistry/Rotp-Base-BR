@@ -20,7 +20,7 @@ class Group_BrokenRegistryTest {
 			+ "¦ History       : Current: 1.0/1.0/1.0/1.0/1.0/1.0 ¦ Last: \r\n"
 			+ "¦ History       : Initial: 1.0/1.0/1.0/1.0/1.0/1.0\r\n"
 			+ "¦ History       : Default: 1.0/1.0/1.0/1.0/1.0/1.0 ¦ Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"

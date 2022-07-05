@@ -16,8 +16,12 @@ Download build: https://rayfowler.itch.io/remnants-of-the-precursors
 
 ## What'New
 
+2026.07.05
+  - Added secondary options for Galaxy shapes.
+  - Added possibility to hide parameters in Profiles.cfg
+
 2026.07.01
-  - Junit test integration
+  - Junit test integration to github
   - Pom file normalization
   - Minor bugs solved
 

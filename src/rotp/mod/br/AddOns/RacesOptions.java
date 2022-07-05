@@ -44,6 +44,18 @@ public class RacesOptions {
          return RaceFilter.selectedGameRaceFilter();
     }
 	/**
+	 * @return the Gui AI Filter
+	 */
+    public static List<String> getGuiFilteredAIList() {
+         return RaceFilter.selectedGuiAIFilter();
+    }
+    /**
+	 * @return AI Filter
+	 */
+	public static List<String> getFilteredAIList() {
+         return RaceFilter.selectedGameAIFilter();
+    }
+	/**
 	 * Set the starting opponents
 	 * @param options the {@code IGameOptions} containing the parameters
 	 */

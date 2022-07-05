@@ -16,14 +16,11 @@ class Group_AdvancedTest {
 	
 	private String galaxyAgePrt = 
 			"\r\n"
-			+ ";  \r\n"
-			+ "; ----------- Advanced Game Options -----------\r\n"
-			+ "; \r\n"
 			+ "¦==== Parameter : GALAXY AGE\r\n"
 			+ "; Options       : [Young, Normal, Old]\r\n"
 			+ "¦ History       : Current: Normal ¦ Last:  ¦ Initial: Normal ¦ Default: Normal\r\n"
 			+ "¦ History       : Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -36,7 +33,7 @@ class Group_AdvancedTest {
 			+ "; Options       : [Lowest, Lower, Low, Normal, High, Higher, Highest]\r\n"
 			+ "¦ History       : Current: Normal ¦ Last:  ¦ Initial: Normal ¦ Default: Normal\r\n"
 			+ "¦ History       : Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -49,7 +46,7 @@ class Group_AdvancedTest {
 			+ "; Options       : [None, Rare, Uncommon, Normal, Common, Frequent]\r\n"
 			+ "¦ History       : Current: Normal ¦ Last:  ¦ Initial: Normal ¦ Default: Normal\r\n"
 			+ "¦ History       : Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -62,7 +59,7 @@ class Group_AdvancedTest {
 			+ "; Options       : [Normal]\r\n"
 			+ "¦ History       : Current: Normal ¦ Last:  ¦ Initial: Normal ¦ Default: Normal\r\n"
 			+ "¦ History       : Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -75,7 +72,7 @@ class Group_AdvancedTest {
 			+ "; Options       : [Normal, Reduced, None]\r\n"
 			+ "¦ History       : Current: Normal ¦ Last:  ¦ Initial: Normal ¦ Default: Normal\r\n"
 			+ "¦ History       : Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -88,7 +85,7 @@ class Group_AdvancedTest {
 			+ "; Options       : [On, Monsters, Off]\r\n"
 			+ "¦ History       : Current: Monsters ¦ Last:  ¦ Initial: Monsters ¦ Default: On\r\n"
 			+ "¦ History       : Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -102,7 +99,7 @@ class Group_AdvancedTest {
 			+ "; Options       : [Lowest, Lower, Low, Normal, High, Higher, Highest]\r\n"
 			+ "¦ History       : Current: Normal ¦ Last:  ¦ Initial: Normal ¦ Default: Normal\r\n"
 			+ "¦ History       : Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -115,7 +112,7 @@ class Group_AdvancedTest {
 			+ "; Options       : [Immediate, Rebels, None]\r\n"
 			+ "¦ History       : Current: Rebels ¦ Last:  ¦ Initial: Rebels ¦ Default: Rebels\r\n"
 			+ "¦ History       : Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -129,7 +126,7 @@ class Group_AdvancedTest {
 			+ "; Options       : [None, Personality, Ability, Both]\r\n"
 			+ "¦ History       : Current: None ¦ Last:  ¦ Initial: None ¦ Default: None\r\n"
 			+ "¦ History       : Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -141,7 +138,7 @@ class Group_AdvancedTest {
 			+ "¦==== Parameter : AUTOPLAY\r\n"
 			+ "; Options       : [Off, Base, Xilmi]\r\n"
 			+ "¦ History       : Current: Off ¦ Last:  ¦ Initial: Off ¦ Default: Off ¦ Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -154,7 +151,7 @@ class Group_AdvancedTest {
 			+ "; Options       : [Normal, Slow, Slower, Slowest]\r\n"
 			+ "¦ History       : Current: Normal ¦ Last:  ¦ Initial: Normal ¦ Default: Normal\r\n"
 			+ "¦ History       : Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -167,7 +164,7 @@ class Group_AdvancedTest {
 			+ "; Options       : [Normal, Fast]\r\n"
 			+ "¦ History       : Current: Normal ¦ Last:  ¦ Initial: Normal ¦ Default: Normal\r\n"
 			+ "¦ History       : Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -180,7 +177,7 @@ class Group_AdvancedTest {
 			+ "; Options       : [Normal]\r\n"
 			+ "¦ History       : Current: Normal ¦ Last:  ¦ Initial: Normal ¦ Default: Normal\r\n"
 			+ "¦ History       : Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -192,7 +189,7 @@ class Group_AdvancedTest {
 			+ "¦==== Parameter : TECH TRADING\r\n"
 			+ "; Options       : [Yes, Allies, No]\r\n"
 			+ "¦ History       : Current: Yes ¦ Last:  ¦ Initial: Yes ¦ Default: Yes ¦ Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -206,7 +203,7 @@ class Group_AdvancedTest {
 			+ "; Options       : [Normal, Restricted]\r\n"
 			+ "¦ History       : Current: Normal ¦ Last:  ¦ Initial: Normal ¦ Default: Normal\r\n"
 			+ "¦ History       : Game: \r\n"
-			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, ·]\r\n"
+			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
 			+ "Profile 1       :\r\n"
 			+ "Random          :\r\n"
@@ -333,20 +330,6 @@ class Group_AdvancedTest {
 		String shouldBe = colonizingPrt;
 		assertEquals(shouldBe, out, "should have been equals");
 	}
-
-//	@Test void Group_Advanced_ClientClasses() {
-//		Group_Advanced group;
-//		group = new Group_Advanced(cct);
-//		String out = group.toString(List.of("Profile 1", "Random"));
-//		String shouldBe = galaxyAgePrt + starDensityPrt + nebulaePrt
-//				+ planetQualityPrt + terraformingPrt + randomEventsPrt
-//				+ AIHostilityPrt + councilPrt + randomizeAIPrt
-//				+ autoPlayPrt + researchPrt + warpSpeedPrt
-//				+ fuelRangePrt + techTradingPrt + colonizingPrt
-//				;
-//		assertEquals(shouldBe, out, "should have been equals");
-//		// System.out.println(out);
-//	}
 
 	@Test void profileList_None() {
 		Group_Advanced group;

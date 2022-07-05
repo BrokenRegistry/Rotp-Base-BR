@@ -16,52 +16,7 @@ class UserProfilesTest {
 		userProfiles = new UserProfiles("", "");
 		userProfiles.initAndLoadProfiles(clientObject);		
 	}
-	
-//	@Test void initAndLoadProfiles_ClientClasses() {
-//		userProfiles = new UserProfiles("", "");
-//		assertEquals(false, userProfiles.isInitialized(), "Not yet initialized");
-//		userProfiles.initAndLoadProfiles(clientObject);
-//		assertEquals(true, userProfiles.isInitialized(), "Should be initialized");
-//		assertEquals(true
-//				, userProfiles.isParameterEnabled("MAXIMIZE EMPIRES SPACING")
-//				, "Should be initialized");
-//		assertEquals(true
-//				, userProfiles.isParameterEnabled("GUI RACE FILTER")
-//				, "Should be initialized");
-//		assertEquals(false
-//				, userProfiles.isParameterEnabled("NON EXISTANT")
-//				, "Should not be initialized");
-//	}
 
-//	@Test
-//	void getAllProfiles() {
-//		init();
-//		System.out.println("getAllProfiles()");
-//		System.out.println(userProfiles.getAllProfiles().toString());
-//		System.out.println();
-//	}
 
-//	@Test
-//	void processKey_U() {
-//		init();
-//		assertEquals(false
-//				, userProfiles.processKey(KeyEvent.VK_U, false, "", clientObject)
-//				, "This KeyEvent sould return false");
-//	}
-
-//	@Test void GuiOpponentRaceList() {
-//		init();
-//		userProfiles.processKey(KeyEvent.VK_U, false, "", clientObject);
-//		param = userProfiles.getParameter("GUI OPPONENTS RACE FILTER");
-//		String result = param.toString(userProfiles.getAllProfiles());
-//		System.out.println(result);
-//		Lines<?, ?> line = param.getProfileLine("User");
-//		AbstractT<?> value =line.getValue();
-//		System.out.println("List");
-//		System.out.println(value.codeViewList().toString());
-//		System.out.println(value.toString());
-//		System.out.println(value.toString());
-//		System.out.println(line.toString());
-//	}
 
 }

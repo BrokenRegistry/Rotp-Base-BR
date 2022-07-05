@@ -36,6 +36,8 @@ public abstract class AbstractParameter<
 	private static String historyHead    = lineFormat("¦ History", "");
 	private static String historyKey     = "¦ History";
 	private static String parameterKey   = "¦==== Parameter";
+	private static String hiddenKey      = "HIDE";
+	private static String hideSeparator  = "-";
 	private static String historyElementsSeparator  = " ¦ ";
 	private static String historyNameValueSeparator = ": ";
 	private static String availableForChange = "---- Available for changes in game saves";
@@ -70,11 +72,13 @@ public abstract class AbstractParameter<
 	}
 	
 	public static void newConfig(PMconfig PM) {
-		optionsHead     = lineFormat(toComment(PM.getConfig("optionsKey")), "");
-		optionsSubHead  = lineFormat(toComment(PM.getConfig("optionsSubKey")), "");
-		historyHead     = lineFormat(PM.getConfig("historyKey"), "");
-		historyKey      = PM.getConfig("historyKey");
-		parameterKey    = PM.getConfig("parameterKey");
+		optionsHead    = lineFormat(toComment(PM.getConfig("optionsKey")), "");
+		optionsSubHead = lineFormat(toComment(PM.getConfig("optionsSubKey")), "");
+		historyHead    = lineFormat(PM.getConfig("historyKey"), "");
+		historyKey     = PM.getConfig("historyKey");
+		parameterKey   = PM.getConfig("parameterKey");
+		hiddenKey      = PM.getConfig("hiddenKey");
+		hideSeparator  = PM.getConfig("hideSeparator");
 		historyElementsSeparator  = PM.getConfig("historyElementsSeparator");
 		historyNameValueSeparator = PM.getConfig("historyNameValueSeparator");
 		availableForChange = PM.getConfig("availableForChange");
@@ -133,6 +137,18 @@ public abstract class AbstractParameter<
 		return value;
 	}
 
+	boolean isHidden() {
+		return localEnable.isHidden();
+	}
+	void setHidden() {
+		localEnable.setHidden();
+	}
+	void unHide() {
+		localEnable.unHide();
+	}
+	void setLocalEnable(String value) {
+		localEnable.setValue(value);
+	}
 	/**
 	 * Search for the winning code View and
 	 * Override the Game File parameter with it
@@ -463,6 +479,13 @@ public abstract class AbstractParameter<
 	public String toString(List<String> groupCodeViews) {
 		String out = NL;
 
+		if(isHidden()) {
+			// SETTING NAME
+			out += lineFormat(parameterKey
+					, parameterName + " " + hideSeparator + hiddenKey)
+					.toString() + NL;
+			return out;
+		}
 		// HEAD COMMENTS
 		out += multiLines(headComments
 				, " ", commentPrt(), commentPrt(), "", true);
@@ -476,8 +499,10 @@ public abstract class AbstractParameter<
 				, " ", commentPrt(), commentPrt(), "", true);
 
 		// OPTIONS LIST
-		out += multiLines(validation.getOptionsRange()
-				, " " ,optionsHead, optionsSubHead, "", true);
+		if (validation.getCriteria().showOptions()) {
+			out += multiLines(validation.getOptionsRange()
+					, " " ,optionsHead, optionsSubHead, "", true);
+		}
 
 		// OPTIONS DESCRIPTION
 		out += toCommentLine(validation.getOptionsDescription(), 1, 1);

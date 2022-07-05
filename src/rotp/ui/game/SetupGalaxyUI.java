@@ -523,7 +523,7 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         // BR:
         if (Profiles.isStartOpponentRaceListEnabled()) {
         	RacesOptions.loadStartingOpponents(newGameOptions());
-        }
+       } // \BR:
         Race r = Race.keyed(newGameOptions().selectedPlayerRace());
         GameUI.gameName = r.setupName()+ " - "+text(newGameOptions().selectedGalaxySize())+ " - "+text(newGameOptions().selectedGameDifficulty());
         repaint();

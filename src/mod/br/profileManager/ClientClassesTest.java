@@ -9,24 +9,12 @@ import rotp.model.ai.AI;
 import rotp.model.empires.Empire;
 import rotp.model.empires.Race;
 import rotp.model.events.RandomEvent;
-//import rotp.model.galaxy.GalaxyBullseyeShape;
-//import rotp.model.galaxy.GalaxyClusterShape;
-//import rotp.model.galaxy.GalaxyEllipticalShape;
-//import rotp.model.galaxy.GalaxyFractalShape;
-//import rotp.model.galaxy.GalaxyGridShape;
-//import rotp.model.galaxy.GalaxyLorenzShape;
-//import rotp.model.galaxy.GalaxyMazeShape;
 import rotp.model.galaxy.GalaxyRectangularShape;
 import rotp.model.galaxy.GalaxyShape;
-//import rotp.model.galaxy.GalaxyShurikenShape;
-//import rotp.model.galaxy.GalaxySpiralArmsShape;
 import rotp.model.galaxy.GalaxySpiralShape;
-//import rotp.model.galaxy.GalaxySwirlClustersShape;
-//import rotp.model.galaxy.GalaxyTextShape;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.galaxy.StarType;
 import rotp.model.game.GameSession;
-// import rotp.model.game.GameSession;
 import rotp.model.game.IGameOptions;
 import rotp.model.game.NewPlayer;
 import rotp.model.planet.Planet;
@@ -76,7 +64,6 @@ public class ClientClassesTest extends ClientClasses{
 	    
 	    private String selectedGalaxyAge;
 		// modnar: random tech start
-//	    private boolean randomTechStart = UserPreferences.randomTechStart();
 	    private String selectedGameDifficulty;
 	    private String selectedResearchRate;
 	    private String selectedTechTradeOption;

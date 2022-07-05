@@ -19,6 +19,8 @@ package mod.br.profileManager;
 
 import static br.profileManager.src.main.java.Validation.History.Default;
 import static br.profileManager.src.main.java.Validation.History.Initial;
+import static rotp.model.game.IGameOptions.SHAPE_ELLIPTICAL;
+import static rotp.model.game.IGameOptions.SHAPE_SPIRAL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,8 @@ import br.profileManager.src.main.java.T_String;
 import br.profileManager.src.main.java.Validation;
 import mod.br.AddOns.RaceFilter;
 import rotp.model.empires.Empire;
+import rotp.model.galaxy.GalaxyEllipticalShape;
+import rotp.model.galaxy.GalaxySpiralShape;
 import rotp.model.game.IGameOptions;
 
 /**
@@ -40,12 +44,25 @@ import rotp.model.game.IGameOptions;
 public class Group_Galaxy extends  AbstractGroup <ClientClasses> {
 
 	Group_Galaxy(ClientClasses go) {
-	   super(go);
+	   super(go, getHeadComments());
 	}
-	@Override
-	protected void initSettingList(ClientClasses go) {
+	private static String getHeadComments() {
+		return  " " + NL
+				+ "------------- Galaxy Options -------------" + NL
+				+ "";
+	}
+
+	@Override protected void initSettingList(ClientClasses go) {
 		addParameter(new GalaxyShape(go));
 		addParameter(new GalaxySize(go));
+		addParameter(new ShapeOption(go, "SHAPE ELLIPTICAL OPTION 1"
+				, SHAPE_ELLIPTICAL, 1, GalaxyEllipticalShape.options1));
+		addParameter(new ShapeOption(go, "SHAPE ELLIPTICAL OPTION 2"
+				, SHAPE_ELLIPTICAL, 2, GalaxyEllipticalShape.options2));
+		addParameter(new ShapeOption(go, "SHAPE SPIRAL OPTION 1"
+				, SHAPE_SPIRAL, 1, GalaxySpiralShape.options1));
+		addParameter(new ShapeOption(go, "SHAPE SPIRAL OPTION 2"
+				, SHAPE_SPIRAL, 2, GalaxySpiralShape.options2));
 		addParameter(new Difficulty(go));
 		addParameter(new OpponentAI(go));
 		addParameter(new NbOpponent(go));	
@@ -57,7 +74,7 @@ public class Group_Galaxy extends  AbstractGroup <ClientClasses> {
 
 	// ========== Common Methods ==========
 	//
-	private static List<String> getOptionList(ClientClasses go) {
+	private static List<String> getRaceOptionList(ClientClasses go) {
 		List<String> list = go.newOptions().startingRaceOptions();
 		list.add("null");
 		list.add("gui");
@@ -65,20 +82,70 @@ public class Group_Galaxy extends  AbstractGroup <ClientClasses> {
 		return list;
 	}
 
-	private static List<String> getFromGUI(IGameOptions options) {
+	private static List<String> getRaceFromGUI(IGameOptions options) {
 		List<String> list = new ArrayList<String>() ;
 		String race;
 		int lim = options.selectedNumberOpponents();
 		for (int i=0; i<lim; i++) {
 			race = options.selectedOpponentRace(i);
 			if (race == null) {
-				race = "null";
+				race = IGameOptions.OPPONENT_AI_BASE;
 			}
 			list .add(race);
 		}
 		return list;
 	}
 
+	// ==============================================================
+	// SHAPE OPTION
+	//
+	static class ShapeOption extends 
+			AbstractParameter <String, Validation<String>, ClientClasses> {
+
+		private final String shapeCodeView;
+		private final int optionLevel;
+		// ========== Constructors and initializer ==========
+		//
+		ShapeOption(ClientClasses go, String name, String codeView
+				, int level, List<String> options) { 
+			super(name, new Validation<String>(new T_String(options.get(0)), options));
+			shapeCodeView = codeView;
+			optionLevel = level;
+			setHistory(Default, options.get(0));
+		}
+		// ========== Overriders ==========
+		//
+		@Override public AbstractT<String> getFromGame (ClientClasses go) {
+			return new T_String(""); // No way to know
+		}
+		@Override public void putToGame(ClientClasses go, AbstractT<String> value) {}
+		@Override public AbstractT<String> getFromUI (ClientClasses go) {
+			if (go.newOptions().selectedGalaxyShape() == shapeCodeView) {
+				switch (optionLevel) {
+				case 1:
+					return new T_String(go.newOptions().selectedGalaxyShapeOption1());
+				case 2:
+					return new T_String(go.newOptions().selectedGalaxyShapeOption2());
+				}
+			}
+			return new T_String("");
+		}
+		@Override public void putToGUI(ClientClasses go, AbstractT<String> value) {
+			if (go.newOptions().selectedGalaxyShape() == shapeCodeView) {
+				switch (optionLevel) {
+				case 1:
+					go.newOptions().selectedGalaxyShapeOption1(value.getCodeView());
+					go.options().selectedGalaxyShapeOption1(value.getCodeView());
+					return;
+				case 2:
+					go.newOptions().selectedGalaxyShapeOption2(value.getCodeView());
+					go.options().selectedGalaxyShapeOption2(value.getCodeView());
+					return;
+				}
+			}
+		}
+		@Override public void initComments() {}
+	}
 	// ==============================================================
 	// GALAXY SHAPE
 	//
@@ -115,12 +182,7 @@ public class Group_Galaxy extends  AbstractGroup <ClientClasses> {
 			go.options().selectedGalaxyShape(value.getCodeView());
 		}
 		
-		@Override public void initComments() {
-			setHeadComments(
-				" " + NL +
-				"------------- Galaxy Options -------------" + NL +
-				" ");
-		}
+		@Override public void initComments() {}
 	}
 	// ==============================================================
 	// GALAXY SIZE
@@ -328,7 +390,7 @@ public class Group_Galaxy extends  AbstractGroup <ClientClasses> {
 					+ " or if your planetary distribution affect a race too much,"
 					+ " you are able to remove them form the pool of selectable opponents." + NL
 					+ "Only the opponents on the list will be shown when you click on the selection rectangle." + NL
-					+ "The race list must be written using “/” as separator." + NL
+					+ "The race list must be written using \"/\" as separator." + NL
 					+ "!!! Don’t break the lines !!! even if they become very long..."
 					+ " There is no multi-line analysis."
 					+ NL);
@@ -378,7 +440,7 @@ public class Group_Galaxy extends  AbstractGroup <ClientClasses> {
 					+ " or if your planetary distribution affect a race too much,"
 					+ " you are able to remove them form the pool of selectable opponents." + NL
 					+ "Only the opponents on the list will be used by the random generator when starting a new game." + NL
-					+ "The race list must be written using “/” as separator." + NL
+					+ "The race list must be written using \"/\" as separator." + NL
 					+ "!!! Don’t break the lines !!! even if they become very long..."
 					+ " There is no multi-line analysis."
 					+ NL);
@@ -399,7 +461,7 @@ public class Group_Galaxy extends  AbstractGroup <ClientClasses> {
 			super("GUI PRESET OPPONENT",
 					new Valid_RaceList(
 							new T_String(go.newOptions().selectedPlayerRace())
-							, getOptionList(go)
+							, getRaceOptionList(go)
 					)
 			);
 			
@@ -427,7 +489,7 @@ public class Group_Galaxy extends  AbstractGroup <ClientClasses> {
 		@Override public void putToGame(ClientClasses go, AbstractT<String> value) {}
 		
 		@Override public AbstractT<String> getFromUI (ClientClasses go) {
-			return new T_String().setFromCodeView(getFromGUI(go.newOptions()));
+			return new T_String().setFromCodeView(getRaceFromGUI(go.newOptions()));
 		}
 		
 		@Override public void putToGUI(ClientClasses go, AbstractT<String> value) {
@@ -447,15 +509,15 @@ public class Group_Galaxy extends  AbstractGroup <ClientClasses> {
 			setSettingComments(" " + NL
 					+ "To fill the opponent list or suggest random opponents from a list." + NL
 					+ "If option is empty, the opponent is not changed." + NL
-					+ "If the option is “null” the result is an empty rectangle." + NL
-					+ "If the option is “random” the opponent will be selected from the full race list." + NL
-					+ "If the option is “GUI” the opponent will be selected from the GUI RACE FILTER list." + NL
-					+ "If the option is “GAME” the opponent will be selected from the GAME RACE FILTER list." + NL
-					+ "If the option is “random race_1, race_2, race_N”  the opponent will be selected from the given list." + NL
+					+ "If the option is \"null\" the result is an empty rectangle." + NL
+					+ "If the option is \"random\" the opponent will be selected from the full race list." + NL
+					+ "If the option is \"GUI\" the opponent will be selected from the GUI RACE FILTER list." + NL
+					+ "If the option is \"GAME\" the opponent will be selected from the GAME RACE FILTER list." + NL
+					+ "If the option is \"random race_1, race_2, race_N\"  the opponent will be selected from the given list." + NL
 					+ "If the list is shorter than the number of opponents and the last option is random:"
 					+ " this last option will be applied to the remaining opponents."
 					+ " Otherwise the remaining opponents aren’t changed." + NL
-					+ "The race list must be written using “/” as separator." + NL
+					+ "The race list must be written using \"/\" as separator." + NL
 					+ "!!! Don’t break the lines !!! even if they become very long..."
 					+ " There is no multi-line analysis."
 					+ NL);
@@ -479,7 +541,7 @@ public class Group_Galaxy extends  AbstractGroup <ClientClasses> {
 			super("START PRESET OPPONENT",
 					new Valid_RaceList(
 							new T_String(go.newOptions().selectedPlayerRace())
-							, getOptionList(go)
+							, getRaceOptionList(go)
 					)
 			);
 			
@@ -507,7 +569,7 @@ public class Group_Galaxy extends  AbstractGroup <ClientClasses> {
 		@Override public void putToGame(ClientClasses go, AbstractT<String> value) {}
 		
 		@Override public AbstractT<String> getFromUI (ClientClasses go) {
-			return new T_String().setFromCodeView(getFromGUI(go.newOptions()));
+			return new T_String().setFromCodeView(getRaceFromGUI(go.newOptions()));
 		}
 		
 		@Override public void putToGUI(ClientClasses go, AbstractT<String> value) {
@@ -522,18 +584,17 @@ public class Group_Galaxy extends  AbstractGroup <ClientClasses> {
 			setSettingComments(" " + NL
 					+ "To replace the random opponent generation when starting a new game." + NL
 					+ "If option is empty or null, the opponent will be randomly selected." + NL
-					+ "If the option is “random” the opponent will be selected from the full race list." + NL
-					+ "If the option is “GUI” the opponent will be selected from the GUI RACE FILTER list." + NL
-					+ "If the option is “GAME” the opponent will be selected from the GAME RACE FILTER list." + NL
-					+ "If the option is “random race_1, race_2, race_N”"
+					+ "If the option is \"random\" the opponent will be selected from the full race list." + NL
+					+ "If the option is \"GUI\" the opponent will be selected from the GUI RACE FILTER list." + NL
+					+ "If the option is \"GAME\" the opponent will be selected from the GAME RACE FILTER list." + NL
+					+ "If the option is \"random race_1, race_2, race_N\""
 					+ " the opponent will be selected from the given list." + NL
 					+ "If the list is shorter than the number of opponents,"
 					+ " this last option will be applied to the remaining opponents."
-					+ " Otherwise the remaining opponents aren’t changed." + NL
 					+ "When the maximum number of a type of opponent (5) is reached,"
 					+ " it’ll be removed from the list of allowed opponents."
 					+ " When this list is empty, sorry, a forbidden race will be chosen." + NL
-					+ "The race list must be written using “/” as separator." + NL
+					+ "The race list must be written using \"/\" as separator." + NL
 					+ "!!! Don’t break the lines !!! even if they become very long..."
 					+ " There is no multi-line analysis."
 					+ NL);

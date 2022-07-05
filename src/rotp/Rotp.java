@@ -37,7 +37,7 @@ import rotp.util.FontManager;
 
 public class Rotp {
     private static final int MB = 1048576;
-    public static final String version = "22.07.01";
+    public static final String version = "22.07.04";
     public static int IMG_W = 1229;
     public static int IMG_H = 768;
     public static String jarFileName = "rotp-" + version + ".jar";
