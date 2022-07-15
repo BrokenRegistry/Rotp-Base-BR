@@ -16,6 +16,9 @@ Download build: https://rayfowler.itch.io/remnants-of-the-precursors
 
 ## What'New
 
+2026.07.15
+  - Changing Player Race: Fixed Technology tree re-generation.
+
 2026.07.13
   - Corrected Flag Initialization bug.
 
