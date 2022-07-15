@@ -93,8 +93,8 @@ public final class Empire implements Base, NamedObject, Serializable {
 
     public final int id;
     private Leader leader;
-    private final String raceKey;
-    private final int raceNameIndex;
+    private String raceKey; // BR: removed final to be able to change race!
+    private int raceNameIndex; // BR: removed final to be able to change race!
     private TechTree tech = new TechTree();
     private final ShipDesignLab shipLab;
     private final int homeSysId;
@@ -128,7 +128,7 @@ public final class Empire implements Base, NamedObject, Serializable {
     private float tradePiracyRate = 0;
     private NamedObject lastAttacker;
     private int defaultMaxBases = UserPreferences.defaultMaxBases();
-    private final String dataRaceKey;
+    private String dataRaceKey; // BR: removed final to be able to change race!
     
     private transient float avgX, avgY, nameX1, nameX2;
 
@@ -2822,12 +2822,25 @@ public final class Empire implements Base, NamedObject, Serializable {
 	 * @param newRace the new race Name
 	 */
 	public void setRace(String newRace) {
-		// raceKey = newRace; 
-		race = Race.keyed(newRace);
-        // dataRaceKey = newRace;
-		dataRace = Race.keyed(newRace);
-        // raceNameIndex = race.nameIndex(race.nextAvailableName());
-        leader = new Leader(this, race.nextAvailableLeader());
+		raceKey     = newRace; 
+        dataRaceKey = newRace;
+		race        = Race.keyed(newRace);
+        dataRace    = Race.keyed(newRace);
+        // sv = new SystemInfo(this);
+        String raceName   = race.nextAvailableName();
+        raceNameIndex     = race.nameIndex(raceName);
+        String leaderName = race.nextAvailableLeader();
+        leader            = new Leader(this, leaderName);
+        tech.reBuild(this);
+
+        shipLab.specials().remove(0); // To avoid 2 "NONE"
+        shipLab.weapons().remove(0); // To avoid 2 "NONE"
+        loadStartingShipDesigns();
+        Colony home = colonizedSystems.get(homeSysId).colony();
+        governorAI().setInitialAllocations(home);
+        sv.refreshFullScan(homeSysId);
+        setBeginningColonyAllocations();
+        ai().scientist().setDefaultTechTreeAllocations();
         shipImage = null;
         shipImageLarge = null;
         shipImageHuge = null;
