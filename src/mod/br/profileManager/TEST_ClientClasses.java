@@ -9,18 +9,29 @@ import rotp.model.ai.AI;
 import rotp.model.empires.Empire;
 import rotp.model.empires.Race;
 import rotp.model.events.RandomEvent;
+import rotp.model.galaxy.GalaxyBullseyeShape;
+import rotp.model.galaxy.GalaxyClusterShape;
+import rotp.model.galaxy.GalaxyEllipticalShape;
+import rotp.model.galaxy.GalaxyFractalShape;
+import rotp.model.galaxy.GalaxyGridShape;
+import rotp.model.galaxy.GalaxyLorenzShape;
+import rotp.model.galaxy.GalaxyMazeShape;
 import rotp.model.galaxy.GalaxyRectangularShape;
 import rotp.model.galaxy.GalaxyShape;
+import rotp.model.galaxy.GalaxyShurikenShape;
+import rotp.model.galaxy.GalaxySpiralArmsShape;
 import rotp.model.galaxy.GalaxySpiralShape;
+import rotp.model.galaxy.GalaxySwirlClustersShape;
+import rotp.model.galaxy.GalaxyTextShape;
 import rotp.model.galaxy.StarSystem;
 import rotp.model.galaxy.StarType;
 import rotp.model.game.GameSession;
+// import rotp.model.game.GameSession;
 import rotp.model.game.IGameOptions;
 import rotp.model.game.NewPlayer;
 import rotp.model.planet.Planet;
 import rotp.model.planet.PlanetType;
 import rotp.model.tech.TechEngineWarp;
-import rotp.ui.UserPreferences;
 import rotp.ui.game.SetupGalaxyUI;
 import rotp.util.Base;
 
@@ -29,7 +40,7 @@ import rotp.util.Base;
  * Classes that have to be passed thru Profile manager
  * Could be replaced by using {@code Object} and casting the class
  */
-public class ClientClassesTest extends ClientClasses{
+public class TEST_ClientClasses extends ClientClasses{
 	private IGameOptions options = new Gui();
 	private IGameOptions option2 = options;
 	private GameSession  session;
@@ -192,8 +203,6 @@ public class ClientClassesTest extends ClientClasses{
 	    @Override
 	    public void selectedAutoplayOption(String s)    { selectedAutoplayOption = s; }
 	    @Override
-	    public String selectedOpponentAIOption()       { return selectedOpponentAIOption == null ? OPPONENT_AI_BASE : selectedOpponentAIOption; } // modnar: default to modnar AI
-	    @Override
 	    public void selectedOpponentAIOption(String s) { selectedOpponentAIOption = s; }
 	    @Override
 	    public String specificOpponentAIOption(int n)  { 
@@ -262,31 +271,31 @@ public class ClientClassesTest extends ClientClasses{
 	    }
 	    private void setGalaxyShape() {
 	        switch(selectedGalaxyShape) {
-//	            case SHAPE_ELLIPTICAL:
-//	                galaxyShape = new GalaxyEllipticalShape(this); break;
+	            case SHAPE_ELLIPTICAL:
+	                galaxyShape = new GalaxyEllipticalShape(this); break;
 	            case SHAPE_SPIRAL:
 	                galaxyShape = new GalaxySpiralShape(this); break;
 	            // modnar: add new map shapes
-//	            case SHAPE_TEXT:
-//	                galaxyShape = new GalaxyTextShape(this); break;
-//	            case SHAPE_CLUSTER:
-//	                galaxyShape = new GalaxyClusterShape(this); break;
-//				case SHAPE_SWIRLCLUSTERS:
-//	                galaxyShape = new GalaxySwirlClustersShape(this); break;
-//				case SHAPE_GRID:
-//	                galaxyShape = new GalaxyGridShape(this); break;
-//				case SHAPE_SPIRALARMS:
-//	                galaxyShape = new GalaxySpiralArmsShape(this); break;
-//				case SHAPE_MAZE:
-//	                galaxyShape = new GalaxyMazeShape(this); break;
-//				case SHAPE_SHURIKEN:
-//	                galaxyShape = new GalaxyShurikenShape(this); break;
-//				case SHAPE_BULLSEYE:
-//	                galaxyShape = new GalaxyBullseyeShape(this); break;
-//				case SHAPE_LORENZ:
-//	                galaxyShape = new GalaxyLorenzShape(this); break;
-//				case SHAPE_FRACTAL:
-//	                galaxyShape = new GalaxyFractalShape(this); break;
+	            case SHAPE_TEXT:
+	                galaxyShape = new GalaxyTextShape(this); break;
+	            case SHAPE_CLUSTER:
+	                galaxyShape = new GalaxyClusterShape(this); break;
+				case SHAPE_SWIRLCLUSTERS:
+	                galaxyShape = new GalaxySwirlClustersShape(this); break;
+				case SHAPE_GRID:
+	                galaxyShape = new GalaxyGridShape(this); break;
+				case SHAPE_SPIRALARMS:
+	                galaxyShape = new GalaxySpiralArmsShape(this); break;
+				case SHAPE_MAZE:
+	                galaxyShape = new GalaxyMazeShape(this); break;
+				case SHAPE_SHURIKEN:
+	                galaxyShape = new GalaxyShurikenShape(this); break;
+				case SHAPE_BULLSEYE:
+	                galaxyShape = new GalaxyBullseyeShape(this); break;
+				case SHAPE_LORENZ:
+	                galaxyShape = new GalaxyLorenzShape(this); break;
+				case SHAPE_FRACTAL:
+	                galaxyShape = new GalaxyFractalShape(this); break;
 	            case SHAPE_RECTANGLE:
 	            default:
 	                galaxyShape = new GalaxyRectangularShape(this);
@@ -299,38 +308,42 @@ public class ClientClassesTest extends ClientClasses{
 	    @Override
 	    public int numGalaxyShapeOption2() {  return galaxyShape.numOptions2(); }
 	    @Override
-	    public int numberStarSystems() {
-	            // MOO Strategy Guide, Table 3-2, p.50
-	        /*
-	        switch (selectedGalaxySize()) {
-	                case SIZE_SMALL:  return 24;
-	                case SIZE_MEDIUM: return 48;
-	                case SIZE_LARGE1:  return 70;
-	                case SIZE_HUGE:   return 108;
-	                default: return 48;
-	        }
-	        */
-	        switch (selectedGalaxySize()) {
-	            case SIZE_TINY:       return 33;
-	            case SIZE_SMALL:      return 50;
-	            case SIZE_SMALL2:     return 70;
-	            case SIZE_MEDIUM:     return 100;
-	            case SIZE_MEDIUM2:    return 150;
-	            case SIZE_LARGE:      return 225;
-	            case SIZE_LARGE2:     return 333;
-	            case SIZE_HUGE:       return 500;
-	            case SIZE_HUGE2:      return 700;
-	            case SIZE_MASSIVE:    return 1000;
-	            case SIZE_MASSIVE2:   return 1500;
-	            case SIZE_MASSIVE3:   return 2250;
-	            case SIZE_MASSIVE4:   return 3333;
-	            case SIZE_MASSIVE5:   return 5000;
-	            case SIZE_INSANE:     return 10000;
-	            case SIZE_LUDICROUS:  return 100000;
-	            case SIZE_MAXIMUM:    return maximumSystems();
-	        }
-	        return 8*(selectedNumberOpponents()+1);
+	    public int numberStarSystems() {  // BR: For Profile Manager comments
+	    	return numberStarSystems(selectedGalaxySize());
 	    }
+	    @Override
+	    public int numberStarSystems(String size) { // BR: For Profile Manager comments
+	        // MOO Strategy Guide, Table 3-2, p.50
+	    /*
+	    switch (selectedGalaxySize()) {
+	            case SIZE_SMALL:  return 24;
+	            case SIZE_MEDIUM: return 48;
+	            case SIZE_LARGE1:  return 70;
+	            case SIZE_HUGE:   return 108;
+	            default: return 48;
+	    }
+	    */
+	    switch (size) {
+	        case SIZE_TINY:       return 33;
+	        case SIZE_SMALL:      return 50;
+	        case SIZE_SMALL2:     return 70;
+	        case SIZE_MEDIUM:     return 100;
+	        case SIZE_MEDIUM2:    return 150;
+	        case SIZE_LARGE:      return 225;
+	        case SIZE_LARGE2:     return 333;
+	        case SIZE_HUGE:       return 500;
+	        case SIZE_HUGE2:      return 700;
+	        case SIZE_MASSIVE:    return 1000;
+	        case SIZE_MASSIVE2:   return 1500;
+	        case SIZE_MASSIVE3:   return 2250;
+	        case SIZE_MASSIVE4:   return 3333;
+	        case SIZE_MASSIVE5:   return 5000;
+	        case SIZE_INSANE:     return 10000;
+	        case SIZE_LUDICROUS:  return 100000;
+	        case SIZE_MAXIMUM:    return maximumSystems();
+	    }
+	    return 8*(selectedNumberOpponents()+1);
+	}
 	    @Override
 	    public int numberNebula() {
 	        if (selectedNebulaeOption().equals(NEBULAE_NONE))
@@ -374,8 +387,6 @@ public class ClientClassesTest extends ClientClasses{
 	            switch(selectedAutoplayOption()) {
 	                case AUTOPLAY_AI_BASE:   return AI.BASE;
 	                case AUTOPLAY_AI_XILMI:  return AI.XILMI;
-//	                case AUTOPLAY_AI_CRUEL: return AI.CRUEL;
-//	                case AUTOPLAY_AI_RANDOM:  return AI.RANDOM;
 	                case AUTOPLAY_OFF:
 	                default:
 	                    return AI.XILMI;  // it does matter both for spending reallocation and for ship-captain
@@ -385,19 +396,11 @@ public class ClientClassesTest extends ClientClasses{
 	            switch(selectedOpponentAIOption()) {
 	                case OPPONENT_AI_BASE:   return AI.BASE;
 	                case OPPONENT_AI_XILMI:  return AI.XILMI;
-//	                case OPPONENT_AI_CRUEL: return AI.CRUEL;
-//	                case OPPONENT_AI_UNFAIR: return AI.UNFAIR;
-//	                case OPPONENT_AI_RANDOM:  return AI.RANDOM;
-//	                case OPPONENT_AI_ALLRANDOM:  return AI.ALLRANDOM;
 	                case OPPONENT_AI_SELECTABLE:
 	                    String specificAI = specificOpponentAIOption(e.id);
 	                    switch(specificAI) {
 	                        case OPPONENT_AI_BASE:   return AI.BASE;
 	                        case OPPONENT_AI_XILMI:  return AI.XILMI;
-//	                        case OPPONENT_AI_CRUEL: return AI.CRUEL;
-//	                        case OPPONENT_AI_UNFAIR: return AI.UNFAIR;
-//	                        case OPPONENT_AI_RANDOM:  return AI.RANDOM;
-//	                        case OPPONENT_AI_ALLRANDOM:  return AI.ALLRANDOM;
 	                    }
 	            }
 	        }
@@ -434,8 +437,6 @@ public class ClientClassesTest extends ClientClasses{
 	        float amt = BASE_RESEARCH_MOD;                  // default adjustment
 	        switch(selectedResearchRate()) {
 	            // mondar: add fast research option
-//	            case RESEARCH_FAST:
-//	                return amt*(1.0f/(techLevel+2.0f) + 0.5f);    // mondar: asymptotically approach 2x faster
 	            case RESEARCH_SLOW:
 	                return amt*((0.6f*techLevel*sqrt(techLevel)+1.0f)/techLevel - 0.2f); // mondar: asymptotically similar
 	                //return amt*sqrt(techLevel/3.0f); // approx. 4x slower for level 50
@@ -491,7 +492,6 @@ public class ClientClassesTest extends ClientClasses{
 	            // Normal:     1, 2, 3, 4, 5,  6,  7,  8,  9
 	            // FastMOD:    1, 2, 3, 5, 7, 10, 13, 17, 21
 	            // Fibonacci:  1, 2, 3, 5, 8, 13, 21, 34, 55
-//	            case WARP_SPEED_FAST: return quarterSquaresPlusOne(tech.baseWarp());
 	        }
 	        return tech.baseWarp();
 	    }
@@ -664,16 +664,16 @@ public class ClientClassesTest extends ClientClasses{
 	        list.add(SHAPE_ELLIPTICAL);
 	        list.add(SHAPE_SPIRAL);
 	        // mondar: add new map shapes
-//	        list.add(SHAPE_TEXT);
-//	        list.add(SHAPE_CLUSTER);
-//			list.add(SHAPE_SWIRLCLUSTERS);
-//			list.add(SHAPE_GRID);
-//			list.add(SHAPE_SPIRALARMS);
-//			list.add(SHAPE_MAZE);
-//			list.add(SHAPE_SHURIKEN);
-//			list.add(SHAPE_BULLSEYE);
-//			list.add(SHAPE_LORENZ);
-//			list.add(SHAPE_FRACTAL);
+	        list.add(SHAPE_TEXT);
+	        list.add(SHAPE_CLUSTER);
+			list.add(SHAPE_SWIRLCLUSTERS);
+			list.add(SHAPE_GRID);
+			list.add(SHAPE_SPIRALARMS);
+			list.add(SHAPE_MAZE);
+			list.add(SHAPE_SHURIKEN);
+			list.add(SHAPE_BULLSEYE);
+			list.add(SHAPE_LORENZ);
+			list.add(SHAPE_FRACTAL);
 	        return list;
 	    }
 		
@@ -700,7 +700,6 @@ public class ClientClassesTest extends ClientClasses{
 	        list.add(DIFFICULTY_HARDER);
 	        list.add(DIFFICULTY_HARDEST);
 	        // modnar: add custom difficulty level option, set in Remnants.cfg
-//	        list.add(DIFFICULTY_CUSTOM);
 	        return list;
 	    }
 	    @Override
@@ -711,7 +710,6 @@ public class ClientClassesTest extends ClientClasses{
 	        list.add(RESEARCH_SLOWER);
 	        list.add(RESEARCH_SLOWEST);
 	        // mondar: add fast research option
-//	        list.add(RESEARCH_FAST);
 	        return list;
 	    }
 	    @Override
@@ -785,8 +783,6 @@ public class ClientClassesTest extends ClientClasses{
 	        List<String> list = new ArrayList<>();
 	        // modnar: change PLANET_QUALITY settings, add larger and richer, comment out poor to great settings
 	        list.add(PLANET_QUALITY_NORMAL);
-//	        list.add(PLANET_QUALITY_LARGER);
-//	        list.add(PLANET_QUALITY_RICHER);
 	        /*
 	        list.add(PLANET_QUALITY_POOR);
 	        list.add(PLANET_QUALITY_MEDIOCRE);
@@ -814,11 +810,13 @@ public class ClientClassesTest extends ClientClasses{
 	    @Override
 	    public List<String> fuelRangeOptions() {
 	        List<String> list = new ArrayList<>();
+//	        list.add(FUEL_RANGE_LOCAL);
+//	        list.add(FUEL_RANGE_LOW);
 	        list.add(FUEL_RANGE_NORMAL);
 	        // modnar: comment out fuelRangeOptions from being selected
-	        //list.add(FUEL_RANGE_HIGH);
-	        //list.add(FUEL_RANGE_HIGHER);
-	        //list.add(FUEL_RANGE_HIGHEST);
+	        list.add(FUEL_RANGE_HIGH);
+	        list.add(FUEL_RANGE_HIGHER);
+	        list.add(FUEL_RANGE_HIGHEST);
 	        return list;
 	    }
 	    @Override
@@ -836,8 +834,6 @@ public class ClientClassesTest extends ClientClasses{
 	        list.add(AUTOPLAY_OFF);
 	        list.add(AUTOPLAY_AI_BASE);
 	        list.add(AUTOPLAY_AI_XILMI);
-//	        list.add(AUTOPLAY_AI_CRUEL);
-//	        list.add(AUTOPLAY_AI_RANDOM);
 	        return list;
 	    }
 	    @Override
@@ -845,10 +841,6 @@ public class ClientClassesTest extends ClientClasses{
 	        List<String> list = new ArrayList<>();
 	        list.add(OPPONENT_AI_BASE);
 	        list.add(OPPONENT_AI_XILMI);
-//	        list.add(OPPONENT_AI_CRUEL);
-//	        list.add(OPPONENT_AI_UNFAIR);
-//	        list.add(OPPONENT_AI_RANDOM);
-//	        list.add(OPPONENT_AI_ALLRANDOM);
 	        list.add(OPPONENT_AI_SELECTABLE);
 	        return list;
 	    }
@@ -857,10 +849,6 @@ public class ClientClassesTest extends ClientClasses{
 	        List<String> list = new ArrayList<>();
 	        list.add(OPPONENT_AI_BASE);
 	        list.add(OPPONENT_AI_XILMI);
-//	        list.add(OPPONENT_AI_CRUEL);
-//	        list.add(OPPONENT_AI_UNFAIR);
-//	        list.add(OPPONENT_AI_RANDOM);
-//	        list.add(OPPONENT_AI_ALLRANDOM);
 	        return list;
 	    }
 	    @Override
@@ -890,9 +878,7 @@ public class ClientClassesTest extends ClientClasses{
 	        selectedPlayerRace(random(startingRaceOptions()));
 	        selectedPlayerRace("RACE_HUMAN");
 	        selectedGameDifficulty = DIFFICULTY_NORMAL;
-	        selectedOpponentAIOption = OPPONENT_AI_BASE;
 	        for (int i=0;i<specificOpponentAIOption.length;i++)
-	            specificOpponentAIOption[i] = OPPONENT_AI_BASE;
 	        setToDefault();
 	        generateGalaxy();
 	    }
@@ -1049,8 +1035,6 @@ public class ClientClassesTest extends ClientClasses{
 	        
 	        // modnar: change PLANET_QUALITY settings, 20% more Poor with LARGER, 20% less Poor with RICHER
 	        switch(selectedPlanetQualityOption()) {
-//	            case PLANET_QUALITY_LARGER:   r1 *= 1.2f; r2 *= 1.2f; break;
-//	            case PLANET_QUALITY_RICHER:   r1 *= 0.8f; r2 *= 0.8f; break;
 	            case PLANET_QUALITY_NORMAL:   break;
 	            default:    break;
 	        }
@@ -1110,8 +1094,6 @@ public class ClientClassesTest extends ClientClasses{
 
 	        // modnar: change PLANET_QUALITY settings, 20% less Rich with LARGER, 50% more Rich with RICHER
 	        switch(selectedPlanetQualityOption()) {
-//	            case PLANET_QUALITY_LARGER:   r1 *= 0.8f; r2 *= 0.8f; break;
-//	            case PLANET_QUALITY_RICHER:   r1 *= 1.5f; r2 *= 1.5f; break;
 	            case PLANET_QUALITY_NORMAL:   break;
 	            default:    break;
 	        }
@@ -1127,14 +1109,9 @@ public class ClientClassesTest extends ClientClasses{
 	        float rArtifact = 1.0f;
 	        // modnar: change PLANET_QUALITY settings, 50% more Artifact with RICHER
 	        switch(selectedPlanetQualityOption()) {
-//	            case PLANET_QUALITY_LARGER:   break;
-//	            case PLANET_QUALITY_RICHER:   rArtifact *= 1.5f; break;
 	            case PLANET_QUALITY_NORMAL:   break;
 	            default:    break;
 	        }
-//	        if (randomTechStart) {
-//	            rArtifact *= 0.0f; // modnar: no Artifact planets if randomTechStart selected
-//	        }
 	        switch(p.type().key()) {
 	            case PlanetType.STEPPE:
 	            case PlanetType.ARID:
@@ -1146,5 +1123,9 @@ public class ClientClassesTest extends ClientClasses{
 	        }
 
 	    }
+		@Override
+		public String selectedOpponentAIOption() {
+			return null;
+		}
 	}
 }

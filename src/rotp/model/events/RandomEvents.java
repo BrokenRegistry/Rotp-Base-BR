@@ -26,13 +26,13 @@ public class RandomEvents implements Base, Serializable {
     private static final float START_CHANCE = 0.0f;
     private static final float CHANCE_INCR = 0.01f;
     private static final float MAX_CHANCE_INCR = 0.05f;
-    public static final int START_TURN = 50;
+    public static int START_TURN = 50; // BR:Made it adjustable
     private List<RandomEvent> events;
     private List<RandomEvent> activeEvents;
     private float eventChance = START_CHANCE;
 
     public RandomEvents() {
-        loadEvents();
+    	initEvents(); // BR: to allow later changes;
     }
     public void addActiveEvent(RandomEvent ev)     { activeEvents.add(ev); }
     public void removeActiveEvent(RandomEvent ev)  { activeEvents.remove(ev); }
@@ -74,9 +74,16 @@ public class RandomEvents implements Base, Serializable {
         }
         return null;
     }
-    private void loadEvents() {
+    public void reloadEvents() {  // BR: to allow later changes;
+        events.clear();
+        loadEvents();   	
+    }
+    private void initEvents() {  // BR: to allow later changes;
         activeEvents = new ArrayList<>();
         events = new ArrayList<>();
+        loadEvents();
+    }
+    private void loadEvents() {  // BR: to allow later changes;
         addEvent(new RandomEventDonation());
         addEvent(new RandomEventDepletedPlanet());
         addEvent(new RandomEventEnrichedPlanet());

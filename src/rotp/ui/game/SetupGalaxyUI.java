@@ -56,6 +56,7 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
     Rectangle backBox = new Rectangle();
     Rectangle startBox = new Rectangle();
     Rectangle settingsBox = new Rectangle();
+    Rectangle ModSettingsBox = new Rectangle(); // modnar: add UI panel for modnar MOD game options
     Rectangle shapeBox = new Rectangle();
     Polygon shapeBoxL = new Polygon();
     Polygon shapeBoxR = new Polygon();
@@ -315,6 +316,18 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         g.drawRoundRect(settingsBox.x, settingsBox.y, settingsBox.width, settingsBox.height, cnr, cnr);
         g.setStroke(prev);
 
+        // modnar: add UI panel for modnar MOD game options
+        // MOD settings button
+        String textMOD = text("SETUP_BUTTON_MOD_SETTINGS");
+        int swMOD = g.getFontMetrics().stringWidth(textMOD);
+        int xMOD = ModSettingsBox.x+((ModSettingsBox.width-swMOD)/2);
+        int yMOD = ModSettingsBox.y+ModSettingsBox.height-s8;
+        Color cMOD = hoverBox == ModSettingsBox ? Color.yellow : GameUI.borderBrightColor();
+        drawShadowedString(g, textMOD, 2, xMOD, yMOD, GameUI.borderDarkColor(), cMOD);
+        prev = g.getStroke();
+        g.setStroke(stroke1);
+        g.drawRoundRect(ModSettingsBox.x, ModSettingsBox.y, ModSettingsBox.width, ModSettingsBox.height, cnr, cnr);
+        g.setStroke(prev);
         // left button
         g.setFont(narrowFont(30));
         String text1 = text("SETUP_BUTTON_BACK");
@@ -383,6 +396,7 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
             return;
         if (click) softClick();
         newGameOptions().selectedGalaxySize(newGameOptions().nextGalaxySize(bounded));
+        newGameOptions().galaxyShape().quickGenerate(); // modnar: do a quickgen to get correct map preview
         repaint();
     }
     public void prevGalaxySize(boolean bounded, boolean click) {
@@ -398,6 +412,7 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
                 newGameOptions().selectedOpponentRace(i,null);
             newGameOptions().selectedNumberOpponents(maxOpps);
         }
+        newGameOptions().galaxyShape().quickGenerate(); // modnar: do a quickgen to get correct map preview
         repaint();
     }
     public void nextGalaxyShape(boolean click) {
@@ -459,17 +474,13 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         newGameOptions().selectedOpponentAIOption(newGameOptions().prevOpponentAI());
         repaint();
     }
-    public void nextResearchRate(boolean click) {
-        if (click) softClick();
-        newGameOptions().selectedResearchRate(newGameOptions().nextResearchRate());
-        repaint();
-    }
     public void increaseOpponents(boolean click) {
         int numOpps = newGameOptions().selectedNumberOpponents();
         if (numOpps >= newGameOptions().maximumOpponentsOptions())
             return;
         if (click) softClick();
         newGameOptions().selectedNumberOpponents(numOpps+1);
+        newGameOptions().galaxyShape().quickGenerate(); // modnar: do a quickgen to get correct map preview
         repaint();
     }
     public void decreaseOpponents(boolean click) {
@@ -479,6 +490,7 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         if (click) softClick();
         newGameOptions().selectedOpponentRace(numOpps-1,null);
         newGameOptions().selectedNumberOpponents(numOpps-1);
+        newGameOptions().galaxyShape().quickGenerate(); // modnar: do a quickgen to get correct map preview
         repaint();
     }
     public void nextSpecificOpponentAI(int i, boolean click) {
@@ -507,6 +519,13 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         optionsUI.open(this);
         release();
     }
+    // modnar: add UI panel for modnar MOD game options
+    public void goToModOptions() {
+        buttonClick();
+        StartModOptionsUI ModOptionsUI = RotPUI.startModOptionsUI();
+        ModOptionsUI.open(this);
+        release();
+    }
     public void goToRaceSetup() {
         buttonClick();
         RotPUI.instance().selectSetupRacePanel();
@@ -523,7 +542,10 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         // BR:
         if (Profiles.isStartOpponentRaceListEnabled()) {
         	RacesOptions.loadStartingOpponents(newGameOptions());
-       } // \BR:
+        }
+        if (Profiles.isStartOpponentAIListEnabled()) {
+        	RacesOptions.loadStartingAIs(newGameOptions());
+        } // \BR:
         Race r = Race.keyed(newGameOptions().selectedPlayerRace());
         GameUI.gameName = r.setupName()+ " - "+text(newGameOptions().selectedGalaxySize())+ " - "+text(newGameOptions().selectedGameDifficulty());
         repaint();
@@ -776,6 +798,11 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
         g.setPaint(GameUI.buttonLeftBackground());
         g.fillRoundRect(settingsBox.x, settingsBox.y, smallButtonW, smallButtonH, cnr, cnr);
 
+        // modnar: add UI panel for modnar MOD game options
+        // draw MOD settings button
+        ModSettingsBox.setBounds(scaled(760), scaled(610), smallButtonW, smallButtonH);
+        g.setPaint(GameUI.buttonLeftBackground());
+        g.fillRoundRect(ModSettingsBox.x, ModSettingsBox.y, smallButtonW, smallButtonH, cnr, cnr);
         int buttonH = s45;
         int buttonW = scaled(220);
         // draw left button
@@ -877,6 +904,9 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
             hoverBox = backBox;
         else if (settingsBox.contains(x,y))
             hoverBox = settingsBox;
+        // modnar: add UI panel for modnar MOD game options
+        else if (ModSettingsBox.contains(x,y))
+            hoverBox = ModSettingsBox;
         else if (shapeBoxL.contains(x,y))
             hoverBox = shapeBoxL;
         else if (shapeBoxR.contains(x,y))
@@ -952,6 +982,9 @@ public final class SetupGalaxyUI  extends BasePanel implements MouseListener, Mo
             goToRaceSetup();
         else if (hoverBox == settingsBox)
             goToOptions();
+        // modnar: add UI panel for modnar MOD game options
+        else if (hoverBox == ModSettingsBox)
+            goToModOptions();
         else if (hoverBox == startBox)
             startGame();
         else if (hoverBox == shapeBoxL)

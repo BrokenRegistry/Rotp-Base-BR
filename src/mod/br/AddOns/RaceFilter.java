@@ -37,6 +37,7 @@ public class RaceFilter {
 	private static List<String> selectedGameAIFilter;
 	private static List<String> selectedGuiAIFilter;
 	private static String[]     startOpponentAI;
+
     // ========== Setters ==========
     //
 	/**

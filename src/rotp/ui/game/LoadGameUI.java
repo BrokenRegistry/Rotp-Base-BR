@@ -357,7 +357,9 @@ public final class LoadGameUI  extends BasePanel implements MouseListener, Mouse
         loading = true;
         repaint();
         buttonClick();
-        final Runnable load = () -> { GameSession.instance().loadRecentSession(false); };
+        final Runnable load = () -> {
+            GameSession.instance().loadRecentSession(false);
+        };
         SwingUtilities.invokeLater(load);
     }
     public void loadGame(String s) {

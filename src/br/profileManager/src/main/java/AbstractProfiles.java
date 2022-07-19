@@ -134,7 +134,25 @@ public abstract class AbstractProfiles<C> extends WriteUtil {
 		return !firstInit;
 	}
 	/**
-   	 * Check if' OK to use a parameter
+   	 * Check if the user has set a valid value for ChangeGame
+	 * @param parameter the Parameter to check
+   	 * @return the Parameter status
+   	 */
+	public boolean hasValidUserValueForNewGame(String parameter) {
+		return (isInitialized() 
+				&& hasValidUserValue(parameter, getReadableProfiles()));
+	}
+	/**
+   	 * Check if the user has set a valid value for ChangeGame
+	 * @param parameter the Parameter to check
+   	 * @return the Parameter status
+   	 */
+	public boolean hasValidUserValueForChangeGame(String parameter) {
+		return (isInitialized() 
+				&& hasValidUserValue(parameter, getGameChangingProfiles()));
+	}
+	/**
+   	 * Check if it's OK to use a parameter
 	 * @param parameter the Parameter to check
    	 * @return the Parameter status
    	 */
@@ -292,6 +310,18 @@ public abstract class AbstractProfiles<C> extends WriteUtil {
 		currentGroup.setGuiParameters(history, clientObject);		
 	}
 
+	// ========================================================================
+	//  Private Methods
+	//
+	public boolean hasValidUserValue(String parameter, List<String> Profiles) {
+		if (isInitialized()) {
+			AbstractParameter<?, ?, C> param = getParameter(parameter);
+			if (param != null) {
+				return param.hasUserValue(Profiles);
+			}
+		}
+		return false;
+	}
 	// ========================================================================
 	// Initializations Methods
 	//

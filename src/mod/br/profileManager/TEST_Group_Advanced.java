@@ -10,8 +10,8 @@ import mod.br.profileManager.Group_Advanced.*;
 
 
 
-class Group_AdvancedTest {
-	private ClientClassesTest cct = new ClientClassesTest();
+class TEST_Group_Advanced {
+	private TEST_ClientClasses cct = new TEST_ClientClasses();
 
 	
 	private String galaxyAgePrt = 
@@ -56,7 +56,7 @@ class Group_AdvancedTest {
 	private String planetQualityPrt = 
 			"\r\n"
 			+ "¦==== Parameter : PLANET QUALITY\r\n"
-			+ "; Options       : [Normal]\r\n"
+			+ "; Options       : [Normal, Larger, Richer]\r\n"
 			+ "¦ History       : Current: Normal ¦ Last:  ¦ Initial: Normal ¦ Default: Normal\r\n"
 			+ "¦ History       : Game: \r\n"
 			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
@@ -136,7 +136,7 @@ class Group_AdvancedTest {
 	private String autoPlayPrt = 
 			"\r\n"
 			+ "¦==== Parameter : AUTOPLAY\r\n"
-			+ "; Options       : [Off, Base, Xilmi]\r\n"
+			+ "; Options       : [Off, Base, Xilmi, Cruel, Random]\r\n"
 			+ "¦ History       : Current: Off ¦ Last:  ¦ Initial: Off ¦ Default: Off ¦ Game: \r\n"
 			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"
@@ -148,7 +148,7 @@ class Group_AdvancedTest {
 	private String researchPrt = 
 			"\r\n"
 			+ "¦==== Parameter : RESEARCH\r\n"
-			+ "; Options       : [Normal, Slow, Slower, Slowest]\r\n"
+			+ "; Options       : [Normal, Slow, Slower, Slowest, Fast]\r\n"
 			+ "¦ History       : Current: Normal ¦ Last:  ¦ Initial: Normal ¦ Default: Normal\r\n"
 			+ "¦ History       : Game: \r\n"
 			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
@@ -252,8 +252,8 @@ class Group_AdvancedTest {
 	}
 
 	@Test void RandomEvents_ClientClasses() {
-		RandomEvents param;
-		param = new RandomEvents(cct);
+		RandomEventsOptions param;
+		param = new RandomEventsOptions(cct);
 		String out = param.toString(List.of("Profile 1", "Random"));
 		String shouldBe = randomEventsPrt;
 		assertEquals(shouldBe, out, "should have been equals");

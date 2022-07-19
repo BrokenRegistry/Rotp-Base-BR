@@ -17,6 +17,7 @@ package rotp.util.sound;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +57,7 @@ public enum SoundManager implements Base {
             loadMusicFiles(soundListDir);
         }
         catch(Exception | NoClassDefFoundError e) {
+            e.printStackTrace();
             log("SoundManager.init error: "+e.getMessage());
             disableOnError("on init: "+e.getMessage());
         }
@@ -136,6 +138,7 @@ public enum SoundManager implements Base {
             currentAmbience = playContinuously(key);
         }
         catch (IllegalArgumentException e) {
+            e.printStackTrace();
             err("error: "+e.toString());
             disableOnError("on ambience:"+e.getMessage());
         }
@@ -244,14 +247,31 @@ public enum SoundManager implements Base {
     }
     private class Sound {
         private final String filename;
+        private transient final String oggFilename;
         private float gain = 0;
         public String style;
         boolean music = false;
+        private final boolean formatOgg;
         public Sound(String fn, float g, String s, boolean b) {
             filename = fn;
             gain = g;
             style = s;
             music = b;
+
+            this.oggFilename = OggClip.changeExtension(fn);
+            try {
+                try (InputStream is = WavClip.wavFileStream(oggFilename)) {
+                    if (is != null) {
+                        System.out.println("Found ogg sound file "+oggFilename);
+                        log("Found ogg sound file "+oggFilename);
+                        formatOgg = true;
+                    } else {
+                        formatOgg = false;
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
         }
         public float masterVolume() {
             if (music)
@@ -260,19 +280,30 @@ public enum SoundManager implements Base {
                 return SoundManager.soundLevel()/ 10.0f;
         }
         public void setVolume(float vol) {
-            if (filename.endsWith("wav"))
+            if (filename.endsWith("wav")) {
+                if (formatOgg) {
+                    OggClip.setVolume(oggFilename, vol);
+                    return;
+                }
                 WavClip.setVolume(filename, vol);
+            }
         }
         public SoundClip play(float gain) {
-            if (filename.endsWith("wav"))
+            if (filename.endsWith("wav")) {
+                if (formatOgg) {
+                    return OggClip.play(oggFilename, gain, masterVolume());
+                }
                 return WavClip.play(filename, gain, masterVolume());
-            else
+            } else
                 return null;
         }
         public SoundClip playContinuously(float gain) {
-            if (filename.endsWith("wav"))
+            if (filename.endsWith("wav")) {
+                if (formatOgg) {
+                    return OggClip.playContinuously(oggFilename, gain, style, masterVolume());
+                }
                 return WavClip.playContinuously(filename, gain, style, masterVolume());
-            else
+            } else
                 return null;
         }
     }

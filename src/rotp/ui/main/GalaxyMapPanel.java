@@ -36,8 +36,12 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import org.apache.commons.math3.util.Pair;
 import rotp.model.Sprite;
 import rotp.model.empires.Empire;
 import rotp.model.galaxy.Galaxy;
@@ -572,7 +576,7 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         if ((areaOffsetX != 0) || (areaOffsetY != 0)) {
             float ctrX = parent.mapFocus().x();
             float ctrY = parent.mapFocus().y();
-            float mapOffsetX = fMapX(ctrX)- fMapX(ctrX-areaOffsetX);          
+            float mapOffsetX = fMapX(ctrX)- fMapX(ctrX-areaOffsetX);
             float mapOffsetY = fMapY(ctrY)-fMapY(ctrY-areaOffsetY);
             AffineTransform xForm = g.getTransform();
             xForm.setToIdentity();
@@ -583,12 +587,17 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         float baseR = shipRange*scale;
         Area tmpRangeArea = scoutRangeArea;
         if (tmpRangeArea == null) {
-            tmpRangeArea = new Area();
+            long time1 = System.nanoTime();
+            List<Area> toAdd = new ArrayList<>();
             for (StarSystem sv: alliedSystems)
-                tmpRangeArea.add(new Area( new Ellipse2D.Float(fMapX(sv.x())-extR, fMapY(sv.y())-extR, 2*extR, 2*extR) ));       
+                toAdd.add(new Area( new Ellipse2D.Float(fMapX(sv.x())-extR, fMapY(sv.y())-extR, 2*extR, 2*extR) ));
             for (StarSystem sv: systems)
-                tmpRangeArea.add(new Area( new Ellipse2D.Float(fMapX(sv.x())-extR, fMapY(sv.y())-extR, 2*extR, 2*extR) ));       
+                toAdd.add(new Area( new Ellipse2D.Float(fMapX(sv.x())-extR, fMapY(sv.y())-extR, 2*extR, 2*extR) ));
+            tmpRangeArea = parallelAdd(toAdd);
             scoutRangeArea = tmpRangeArea;
+            long time2 = System.nanoTime();
+            double ms = (time2-time1) / 1_000_000.0;
+//            System.out.format("RRR scout %.2f ms\n", ms);
         }
         g.setColor(extendedBorder);
         g.setStroke(stroke2);
@@ -597,13 +606,18 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
 
         tmpRangeArea = shipRangeArea;
         if (tmpRangeArea == null) {
-            tmpRangeArea = new Area();
+            long time1 = System.nanoTime();
+            List<Area> toAdd = new ArrayList<>();
             for (StarSystem sv: alliedSystems)
-                tmpRangeArea.add(new Area( new Ellipse2D.Float(fMapX(sv.x())-baseR, fMapY(sv.y())-baseR, 2*baseR, 2*baseR) ));       
+                toAdd.add(new Area( new Ellipse2D.Float(mapX(sv.x())-baseR, mapY(sv.y())-baseR, 2*baseR, 2*baseR) ));
             for (StarSystem sv: systems)
-                tmpRangeArea.add(new Area( new Ellipse2D.Float(fMapX(sv.x())-baseR, fMapY(sv.y())-baseR, 2*baseR, 2*baseR) ));       
+                toAdd.add(new Area( new Ellipse2D.Float(mapX(sv.x())-baseR, mapY(sv.y())-baseR, 2*baseR, 2*baseR) ));
+            tmpRangeArea = parallelAdd(toAdd);
             shipRangeArea = tmpRangeArea;
-        }       
+            long time2 = System.nanoTime();
+            double ms = (time2-time1) / 1_000_000.0;
+//            System.out.format("RRR base %.2f ms\n", ms);
+        }
         
         g.setColor(normalBackground);
         g.fill(tmpRangeArea);
@@ -612,6 +626,47 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         g.draw(tmpRangeArea);   
         
         g.setTransform(prevXForm);
+    }
+
+    static ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+    static Function<List<Area>, Area> addAreas = list -> {
+        Area total = list.get(0);
+        for (int i = 1; i < list.size(); i ++) {
+            Area area = list.get(i);
+            total.add(area);
+        }
+        return total;
+    };
+    private Area parallelAdd(List<Area> areas) {
+        if (areas == null || areas.isEmpty()) {
+            return new Area();
+        }
+        // split areas into parts of X areas per per thread, and
+        int step = Math.max(2, areas.size() / Runtime.getRuntime().availableProcessors());
+        List<Future<Area>> futures = new ArrayList<>();
+        int i;
+        for (i = 0; i < areas.size() - step; i+= step) {
+            List<Area> part = areas.subList(i, i+step);
+            Future<Area> future = executor.submit(() -> addAreas.apply(part));
+            futures.add(future);
+        }
+        if (i < areas.size()) {
+            List<Area> part = areas.subList(i, areas.size());
+            Future<Area> future = executor.submit(() -> addAreas.apply(part));
+            futures.add(future);
+        }
+//        System.out.println("RRR Processed in "+futures.size()+" parts of "+step+" areas each");
+        try {
+            Area total = futures.get(0).get();
+            for (i = 1; i < futures.size(); i++) {
+                Area area = futures.get(i).get();
+                total.add(area);
+            }
+            return total;
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
     private void drawGridCircularDisplayDark(Graphics2D g) {
         Galaxy gal = galaxy();
@@ -871,7 +926,7 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         // we need to recalculate the new focusX/Y before
         // recentering so that we can have the proper pixel
         // offset for the range areas
-        // only do this for changed X/Y values to avoid 
+        // only do this for changed X/Y values to avoid
         // introducing rounding errors
         if (deltaX != 0) {
             int focusX = mapX(parent.mapFocus().x());
@@ -879,9 +934,9 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
         }
         if (deltaY != 0) {
             int focusY = mapY(parent.mapFocus().y());
-            newObjY = bounds(0, objY(focusY-deltaY), sizeY());      
+            newObjY = bounds(0, objY(focusY-deltaY), sizeY());
         }
-        
+
         areaOffsetX += (objX-newObjX);
         areaOffsetY += (objY-newObjY);
         
@@ -926,7 +981,7 @@ public class GalaxyMapPanel extends BasePanel implements ActionListener, MouseLi
             hoverSprite.wheel(this, e.getWheelRotation(), false);
             return;
         }
-        
+
         if (parent.forwardMouseEvents())
             parent.mouseWheelMoved(e);
         else

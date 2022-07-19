@@ -12,15 +12,16 @@ import mod.br.profileManager.Group_Galaxy.GalaxySize;
 import mod.br.profileManager.Group_Galaxy.NbOpponent;
 import mod.br.profileManager.Group_Galaxy.OpponentAI;
 
-class Group_GalaxyTest {
-	private ClientClassesTest cct = new ClientClassesTest();
+class TEST_Group_Galaxy {
+	private TEST_ClientClasses cct = new TEST_ClientClasses();
 
 	private String NL = System.lineSeparator();
 	
 	private String galaxyShapePrt = 
 			"\r\n"
 			+ "¦==== Parameter : GALAXY SHAPE\r\n"
-			+ "; Options       : [Rectangle, Ellipse, Spiral]\r\n"
+			+ "; Options       : [Rectangle, Ellipse, Spiral, Text, Cluster, Swirlclusters,\r\n"
+			+ ";   \" \"         : Grid, Spiralarms, Maze, Shuriken, Bullseye, Lorenz, Fractal]\r\n"
 			+ "¦ History       : Current: Rectangle ¦ Last:  ¦ Initial: Rectangle\r\n"
 			+ "¦ History       : Default: Rectangle ¦ Game: \r\n"
 			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
@@ -48,7 +49,8 @@ class Group_GalaxyTest {
 	private String difficultyPrt = 
 			"\r\n"
 			+ "¦==== Parameter : DIFFICULTY\r\n"
-			+ "; Options       : [Easiest, Easier, Easy, Normal, Hard, Harder, Hardest]\r\n"
+			+ "; Options       : [Easiest, Easier, Easy, Normal, Hard, Harder, Hardest,\r\n"
+			+ ";   \" \"         : Custom]\r\n"
 			+ "¦ History       : Current: Normal ¦ Last:  ¦ Initial: Normal ¦ Default: Easy\r\n"
 			+ "¦ History       : Game: \r\n"
 			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
@@ -61,8 +63,8 @@ class Group_GalaxyTest {
 	private String opponentAIPrt = 
 			"\r\n"
 			+ "¦==== Parameter : OPPONENT AI\r\n"
-			+ "; Options       : [Base, Xilmi, Select]\r\n"
-			+ "¦ History       : Current: Base ¦ Last:  ¦ Initial: Base ¦ Default: Base\r\n"
+			+ "; Options       : [Base, Xilmi, Cruel, Unfair, Random, Allrandom, Select]\r\n"
+			+ "¦ History       : Current: Cruel ¦ Last:  ¦ Initial: Cruel ¦ Default: Base\r\n"
 			+ "¦ History       : Game: \r\n"
 			+ "¦ LOCAL ENABLE  : All         ; [No, All, Save, Load, Hide, ·]\r\n"
 			+ "\r\n"

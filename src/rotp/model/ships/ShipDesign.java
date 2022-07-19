@@ -61,6 +61,9 @@ public final class ShipDesign extends Design {
     private int maxUnusedTurns = 12; // max number of turns to survive while unused
     private int usedCount = 0;       // # ships used by FleetCommander... updated each turn
     private float perTurnDmg = 0;
+    private boolean autoScout = false;
+    private boolean autoColonize = false;
+    private boolean autoAttack = false;
     private String iconKey;
     private int shipColor;
     private transient ImageIcon icon;
@@ -643,5 +646,29 @@ public final class ShipDesign extends Design {
     public void preNextTurn() {
         resetBuildCount();
         usedCount = 0;
+    }
+
+    public boolean isAutoScout() {
+        return autoScout;
+    }
+
+    public void setAutoScout(boolean autoScout) {
+        this.autoScout = autoScout;
+    }
+
+    public boolean isAutoColonize() {
+        return autoColonize;
+    }
+
+    public void setAutoColonize(boolean autoColonize) {
+        this.autoColonize = autoColonize;
+    }
+
+    public boolean isAutoAttack() {
+        return autoAttack;
+    }
+
+    public void setAutoAttack(boolean autoAttack) {
+        this.autoAttack = autoAttack;
     }
 }

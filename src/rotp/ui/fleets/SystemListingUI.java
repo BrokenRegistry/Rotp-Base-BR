@@ -245,7 +245,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
                 x0 += (col.width() + cellSpacing);
             }
             row.w = x0-leftM;
-            if (isLastSelected(sys)) 
+            if (isLastSelected(sys))
                 anchorRow = row;
             sprites.add(row);
             y0 += rowH;
@@ -258,8 +258,8 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
             g.setColor(SystemPanel.whiteText);
             g.drawRect(anchorRow.x, anchorRow.y-anchorRow.h-s1, anchorRow.w-s2, anchorRow.h+s2);
             g.setStroke(prev);
-        }        
-        
+        }
+
         g.setClip(null);
         listBox.setBounds(0,row1Y,w,h-row1Y);
         
@@ -291,7 +291,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
     public boolean scrollDown()  { 
         int prevY = startY;
         startY = min(maxY, startY+s10);
-        
+
         boolean changed = startY != prevY;
         return changed;
     }
@@ -454,7 +454,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
         
         boolean shift = e.isShiftDown();
         boolean ctrl = e.isControlDown();
-        
+
         if (hoverBox == listScroller)
             return;
 
@@ -840,7 +840,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
            SystemView sv = player().sv.view(sys.id);
             int sz = s35;
             Image img = sv.flagImage();
-            
+
             g.drawImage(img, x+w-sz, y-sz+s3, sz, sz, null);
         }
     }
@@ -857,7 +857,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
             boolean displayed = isDisplayed(sys);
             boolean editable = lastSelected && displayed && selected;
             boolean editableIfDisplayed = lastSelected && selected;
-            
+
             if (!editable) {
                 if (editableIfDisplayed)
                     nameField.setVisible(false);
@@ -866,6 +866,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
             }
 
            if (nameField.isVisible()) {
+               nameField.setForeground(color(sys));
                 if (nameField.getY() != (y-s30)) {
                     nameField.setBounds(x, y-s30, w, s30);
                     nameField.repaint();
@@ -878,11 +879,25 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
                 nameField.setBackground(selectedRedC());
             else
                 nameField.setBackground(selectedC());
-            
+
 
             nameField.setBounds(x, y-s30, w, s30);
+            nameField.setForeground(color(sys));
             nameField.setVisible(true);
             nameField.repaint();
+        }
+
+        @Override
+        protected Color color(StarSystem sys) {
+            if (sys.colony().isGovernor()) {
+                return Color.green;
+            } else {
+                return super.color(sys);
+            }
+        }
+
+        public boolean showField(int y) {
+            return (y >= minDisplayY) && (y <= maxDisplayY);
         }
     }
     public class SystemNotesColumn extends SystemDataColumn {
@@ -898,7 +913,7 @@ public abstract class SystemListingUI extends BasePanel implements MouseListener
             boolean displayed = isDisplayed(sys);
             boolean editable = lastSelected && displayed && selected;
             boolean editableIfDisplayed = lastSelected && selected;
-            
+
             if (!editable) {
                 if (editableIfDisplayed)
                     notesField.setVisible(false);

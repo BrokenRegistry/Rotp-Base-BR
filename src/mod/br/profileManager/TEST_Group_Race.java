@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import mod.br.profileManager.Group_Race.PlayerColor;
 import mod.br.profileManager.Group_Race.PlayerRace;
 
-class Group_RaceTest {
-	private ClientClassesTest cct = new ClientClassesTest();
+class TEST_Group_Race {
+	private TEST_ClientClasses cct = new TEST_ClientClasses();
 	
 	private String racePrt = 
 			"\r\n"

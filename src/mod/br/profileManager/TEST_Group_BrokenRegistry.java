@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import mod.br.profileManager.Group_BrokenRegistry.BaseProbabilityModifier;
 
-class Group_BrokenRegistryTest {
-	private ClientClassesTest cct = new ClientClassesTest();
+class TEST_Group_BrokenRegistry {
+	private TEST_ClientClasses cct = new TEST_ClientClasses();
 	
 	private String StarProbabilityPrt = 
 			"\r\n"

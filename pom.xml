@@ -18,7 +18,6 @@
 		<RepoId>Rotp-Base-BR</RepoId>
 		<AuthorId>BrokenRegistry</AuthorId>
 		<BaseFileName>rotp-${project.version}</BaseFileName>
-		<OutFolder>target/</OutFolder>
 	 	<!-- Maven Standard -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>8</java.version>
@@ -26,7 +25,23 @@
 		<junit.platform.version>1.8.2</junit.platform.version>
 		<GITHUB_TOKEN></GITHUB_TOKEN>
 	</properties>
-	
+
+	<!-- GitHub Declaration -->
+	<scm>
+		<connection>scm:git:${project.scm.url}</connection>
+		<developerConnection>scm:git:${project.scm.url}</developerConnection>
+		<url>https://github.com/${AuthorId}/${RepoId}.git</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>${AuthorId}</name>
+			<url>https://maven.pkg.github.com/${AuthorId}/${RepoId}</url>
+		</repository>
+	</distributionManagement>
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>local-repository</id>
@@ -74,6 +89,10 @@
 			<artifactId>webp-imageio</artifactId>
 			<version>0.1.6</version>
 		</dependency>
+		<!-- Needed to play video -->
+		<!-- Remove ffmpeg dependency, too big jar size -->
+		<!-- JavaFX doesn't do WebM, don't use JavaFX -->
+		<!-- Try LibGDX next -->
 
 		<!-- My attempt to convert save game files to JSON, incomplete -->
 		<dependency>
@@ -240,7 +259,7 @@
 								<!-- When launching full version, run Rotp directly, no need to go via RotpGovernor main -->
 								<transformer
 										implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>rotp.Rotp</mainClass>
+									<mainClass>rotp.RotpGovernor</mainClass>
 									<manifestEntries>
 										<Built-By>${AuthorId}</Built-By>
 									</manifestEntries>
@@ -302,12 +321,12 @@
 								<timeoutErr>false</timeoutErr>
 							</splash>
 							<headerType>gui</headerType>
-							<outfile>${OutFolder}${BaseFileName}.exe</outfile>
-							<!-- <jar>${OutFolder}rotp-${project.version}-mini.jar</jar> -->
-							<jar>${OutFolder}${BaseFileName}-mini.jar</jar>
+							<outfile>target/${BaseFileName}.exe</outfile>
+							<!-- <jar>target/rotp-${project.version}-mini.jar</jar> -->
+							<jar>target/${BaseFileName}-mini.jar</jar>
 							<errTitle>ROTP</errTitle>
 							<classPath>
-								<mainClass>rotp.Rotp</mainClass>
+								<mainClass>rotp.RotpGovernor</mainClass>
 								<addDependencies>false</addDependencies>
 								<preCp>anything</preCp>
 							</classPath>
@@ -336,27 +355,47 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- package a jar with governor classes only -->
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>3.1.0</version>
+				<artifactId>maven-assembly-plugin</artifactId>
 				<executions>
 					<execution>
 						<phase>package</phase>
-						<configuration>
-							<target>
-								<delete>
-									<fileset dir="${OutFolder}">
-										<include name="original*.jar"/>
-										<include name="rotp*.exe"/>
-										<include name="rotp*mini.jar"/>
-									</fileset>
-								</delete> 
-							</target>
-						</configuration>
 						<goals>
-							<goal>run</goal>
+							<goal>single</goal>
 						</goals>
+						<configuration>
+							<appendAssemblyId>true</appendAssemblyId>
+							<descriptors>
+								<descriptor>src/assembly/windows.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- runs with github-release:github-release -->
+			<plugin>
+				<groupId>com.ragedunicorn.tools.maven</groupId>
+				<artifactId>github-release-maven-plugin</artifactId>
+				<version>1.0.2</version>
+				<executions>
+					<execution>
+						<id>default-cli</id>
+						<configuration>
+							<owner>${AuthorId}</owner>
+							<repository>${RepoId}</repository>
+							<authToken>${GITHUB_TOKEN}</authToken>
+							<tagName>${project.version}</tagName>
+							<name>${BaseFileName}</name>
+							<targetCommitish>main</targetCommitish>
+							<releaseNotes>target/classes/README.md</releaseNotes>
+							<assets>
+								<asset>target/${BaseFileName}.jar</asset>
+								<asset>target/${BaseFileName}-mini.jar</asset>
+								<asset>target/${BaseFileName}-windows.zip</asset>
+								<!-- <asset>Profiles.pdf</asset> -->
+							</assets>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

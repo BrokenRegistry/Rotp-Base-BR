@@ -1,3 +1,4 @@
+/*Test.java
 /AbstractGroup.class
 /AbstractParameter.class
 /AbstractProfiles$Parameter_ProfileAction.class
@@ -33,3 +34,6 @@
 /ValidationCriteria.class
 /WriteUtil.class
 /WriteUtilTest.class
+/PMconfig$NewConfig.class
+/Valid_IntegerWithList.class
+/basicTest.class

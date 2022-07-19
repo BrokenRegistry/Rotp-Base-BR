@@ -42,7 +42,14 @@ public class StarSystemFactory implements Base {
     }
     public StarSystem newSystemForRace(Race r, Galaxy gal) {
         IGameOptions opts = GameSession.instance().options();
-        String type = opts.randomRaceStarType(r);
+        String type;
+        // BR: if symmetric all race have same home system type
+        if (opts.galaxyShape().isSymmetric()) {
+        	int id = gal.empire(0).homeSysId();
+            type = gal.system(id).starType().key();
+        } else {
+            type = opts.randomRaceStarType(r);
+        }
         StarSystem sys = StarSystem.create(type, gal);
         sys.planet(PlanetFactory.createHomeworld(r, sys, session().populationBonus()));
         return sys;
@@ -53,5 +60,12 @@ public class StarSystemFactory implements Base {
         StarSystem sys = StarSystem.create(type, gal);
         sys.planet(PlanetFactory.createHomeworld(r, sys, session().populationBonus()));
         return sys;
+    }
+    // BR: For symmetric galaxies copy player characteristics
+    public StarSystem copySystem(Galaxy gal, StarSystem refStar) {
+    	String type = refStar.starType().key();
+    	StarSystem sys = StarSystem.create(type, gal);
+    	sys.planet(PlanetFactory.copyPlanet(sys, refStar.planet()));
+    	return sys;
     }
 }

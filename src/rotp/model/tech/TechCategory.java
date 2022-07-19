@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import rotp.model.empires.Empire;
 import rotp.util.Base;
+import rotp.ui.UserPreferences;
 
 public final class TechCategory implements Base, Serializable {
     private static final long serialVersionUID = 1L;
@@ -126,8 +127,20 @@ public final class TechCategory implements Base, Serializable {
             buildResearchList();
     }
     public void addPossibleTech(String id) {
-        if (!possibleTechs.contains(id))
+        if (!possibleTechs.contains(id)) {
             possibleTechs.add(id);
+            if (researchCompleted) {
+                // unlock current category
+                researchCompleted = false;
+                locked = false;
+                // set all other completed categories to 0
+                for (int i = 0; i < TechTree.NUM_CATEGORIES; i++) {
+                    if (tree.category(i).researchCompleted) {
+                        tree.category(i).allocation(0);
+                    }
+                }
+            }
+        }
     }
     public void addKnownTech(String id) {
         if (!knownTechs().contains(id)) {
@@ -215,6 +228,33 @@ public final class TechCategory implements Base, Serializable {
                     found = true;
                 }
             }
+			// modnar: always add in Star Gates Tech
+			// if the ALWAYS_STAR_GATES option in UserPreferences (Remnants.cfg) is set to YES
+			// for tech category Propulsion, index = 4
+			// tech level 27, quintile i = 5
+			if ((index == 4) && (i == 5) && UserPreferences.alwaysStarGates()) {
+				String StarGateId = "Stargate:0";
+				addPossibleTech(StarGateId);
+                found = true;
+			}
+            // modnar: always add in Thorium Cells Tech
+			// if the ALWAYS_THORIUM option in UserPreferences (Remnants.cfg) is set to YES
+			// for tech category Propulsion, index = 4
+			// tech level 41, quintile i = 8
+			if ((index == 4) && (i == 8) && UserPreferences.alwaysThorium()) {
+				String ThoriumCellId = "FuelRange:8";
+				addPossibleTech(ThoriumCellId);
+                found = true;
+			}
+            // BR: always add in Control Irradiated Tech
+			// if the ALWAYS_THORIUM option in UserPreferences (Remnants.cfg) is set to YES
+			// for tech category Propulsion, index = 4
+			// tech level 41, quintile i = 8
+			if ((index == 3) && (i == 6) && UserPreferences.alwaysIrradiated()) {
+				String IrradiatedId = "ControlEnvironment:6";
+				addPossibleTech(IrradiatedId);
+                found = true;
+			}
             if (!found)
                 addPossibleTech(random(techs));
         }
@@ -224,6 +264,7 @@ public final class TechCategory implements Base, Serializable {
         for (int i=0; i<baseCat.possibleTechs.size(); i++) {
             String id = baseCat.possibleTechs.get(i);
             Tech t = tech(id);
+            t.init();
             if (t.free && !tree.spy())
                 learnTech(id);
         }
@@ -539,9 +580,10 @@ public final class TechCategory implements Base, Serializable {
         if (id.equals(currentTech())) {
             resetResearchBC();
             List<String> techs = techIdsAvailableForResearch();
-            if (techs.isEmpty())
+            if (techs.isEmpty()) {
+                allocation(0); // if we're complete, set allocation to 0
                 researchCompleted = true;
-            else
+            } else
                 setTechToResearch();
         }
         if (techIdsAvailableForResearch().isEmpty())

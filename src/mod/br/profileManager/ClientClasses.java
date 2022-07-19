@@ -48,7 +48,7 @@ public class ClientClasses {
 	// Getters
 	//
 	/**
-	 * @return the guiObject
+	 * @return the guiObject or the Session().options()
 	 */
 	public IGameOptions newOptions() {
 		return newOption;

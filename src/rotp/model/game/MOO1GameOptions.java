@@ -28,6 +28,17 @@ import rotp.model.galaxy.GalaxyEllipticalShape;
 import rotp.model.galaxy.GalaxyRectangularShape;
 import rotp.model.galaxy.GalaxyShape;
 import rotp.model.galaxy.GalaxySpiralShape;
+// mondar: add new map shapes
+import rotp.model.galaxy.GalaxyTextShape; // modnar, custom shape
+import rotp.model.galaxy.GalaxyClusterShape; // modnar, custom shape
+import rotp.model.galaxy.GalaxySwirlClustersShape; // modnar, custom shape
+import rotp.model.galaxy.GalaxyGridShape; // modnar, custom shape
+import rotp.model.galaxy.GalaxySpiralArmsShape; // modnar, custom shape
+import rotp.model.galaxy.GalaxyMazeShape; // modnar, custom shape
+import rotp.model.galaxy.GalaxyShurikenShape; // modnar, custom shape, long generation times
+import rotp.model.galaxy.GalaxyBullseyeShape; // modnar, custom shape, long generation times
+import rotp.model.galaxy.GalaxyLorenzShape; // modnar, custom shape, long generation times
+import rotp.model.galaxy.GalaxyFractalShape; // modnar, custom shape, long generation times
 import rotp.model.galaxy.StarSystem;
 import rotp.model.galaxy.StarType;
 import rotp.model.planet.Planet;
@@ -252,7 +263,7 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     @Override
     public int defaultOpponentsOptions() {
     	// BR: customize preferred Star per empire
-    	float prefStarsPerEmpire = 16f;
+    	float prefStarsPerEmpire = 10f;
     	if (Profiles.isPreferredStarsPerEmpireEnabled()) {
     		prefStarsPerEmpire = GalaxyOptions.getPreferredStarsPerEmpire();
     	}
@@ -323,6 +334,27 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
                 galaxyShape = new GalaxyEllipticalShape(this); break;
             case SHAPE_SPIRAL:
                 galaxyShape = new GalaxySpiralShape(this); break;
+            // mondar: add new map shapes
+            case SHAPE_TEXT:
+                galaxyShape = new GalaxyTextShape(this); break;
+            case SHAPE_CLUSTER:
+                galaxyShape = new GalaxyClusterShape(this); break;
+			case SHAPE_SWIRLCLUSTERS:
+                galaxyShape = new GalaxySwirlClustersShape(this); break;
+			case SHAPE_GRID:
+                galaxyShape = new GalaxyGridShape(this); break;
+			case SHAPE_SPIRALARMS:
+                galaxyShape = new GalaxySpiralArmsShape(this); break;
+			case SHAPE_MAZE:
+                galaxyShape = new GalaxyMazeShape(this); break;
+			case SHAPE_SHURIKEN:
+                galaxyShape = new GalaxyShurikenShape(this); break;
+			case SHAPE_BULLSEYE:
+                galaxyShape = new GalaxyBullseyeShape(this); break;
+			case SHAPE_LORENZ:
+                galaxyShape = new GalaxyLorenzShape(this); break;
+			case SHAPE_FRACTAL:
+                galaxyShape = new GalaxyFractalShape(this); break;
             case SHAPE_RECTANGLE:
             default:
                 galaxyShape = new GalaxyRectangularShape(this);
@@ -335,38 +367,42 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
     @Override
     public int numGalaxyShapeOption2() {  return galaxyShape.numOptions2(); }
     @Override
-    public int numberStarSystems() {
-            // MOO Strategy Guide, Table 3-2, p.50
-        /*
-        switch (selectedGalaxySize()) {
-                case SIZE_SMALL:  return 24;
-                case SIZE_MEDIUM: return 48;
-                case SIZE_LARGE1:  return 70;
-                case SIZE_HUGE:   return 108;
-                default: return 48;
-        }
-        */
-        switch (selectedGalaxySize()) {
-            case SIZE_TINY:       return 33;
-            case SIZE_SMALL:      return 50;
-            case SIZE_SMALL2:     return 70;
-            case SIZE_MEDIUM:     return 100;
-            case SIZE_MEDIUM2:    return 150;
-            case SIZE_LARGE:      return 225;
-            case SIZE_LARGE2:     return 333;
-            case SIZE_HUGE:       return 500;
-            case SIZE_HUGE2:      return 700;
-            case SIZE_MASSIVE:    return 1000;
-            case SIZE_MASSIVE2:   return 1500;
-            case SIZE_MASSIVE3:   return 2250;
-            case SIZE_MASSIVE4:   return 3333;
-            case SIZE_MASSIVE5:   return 5000;
-            case SIZE_INSANE:     return 10000;
-            case SIZE_LUDICROUS:  return 100000;
-            case SIZE_MAXIMUM:    return maximumSystems();
-        }
-        return 8*(selectedNumberOpponents()+1);
+    public int numberStarSystems() {  // BR: For Profile Manager comments
+    	return numberStarSystems(selectedGalaxySize());
     }
+    @Override
+    public int numberStarSystems(String size) { // BR: For Profile Manager comments
+        // MOO Strategy Guide, Table 3-2, p.50
+    /*
+    switch (selectedGalaxySize()) {
+            case SIZE_SMALL:  return 24;
+            case SIZE_MEDIUM: return 48;
+            case SIZE_LARGE1:  return 70;
+            case SIZE_HUGE:   return 108;
+            default: return 48;
+    }
+    */
+    switch (size) {
+        case SIZE_TINY:       return 33;
+        case SIZE_SMALL:      return 50;
+        case SIZE_SMALL2:     return 70;
+        case SIZE_MEDIUM:     return 100;
+        case SIZE_MEDIUM2:    return 150;
+        case SIZE_LARGE:      return 225;
+        case SIZE_LARGE2:     return 333;
+        case SIZE_HUGE:       return 500;
+        case SIZE_HUGE2:      return 700;
+        case SIZE_MASSIVE:    return 1000;
+        case SIZE_MASSIVE2:   return 1500;
+        case SIZE_MASSIVE3:   return 2250;
+        case SIZE_MASSIVE4:   return 3333;
+        case SIZE_MASSIVE5:   return 5000;
+        case SIZE_INSANE:     return 10000;
+        case SIZE_LUDICROUS:  return 100000;
+        case SIZE_MAXIMUM:    return maximumSystems();
+    }
+    return 8*(selectedNumberOpponents()+1);
+}
     @Override
     public int numberNebula() {
         if (selectedNebulaeOption().equals(NEBULAE_NONE))
@@ -713,6 +749,17 @@ public class MOO1GameOptions implements Base, IGameOptions, Serializable {
         list.add(SHAPE_RECTANGLE);
         list.add(SHAPE_ELLIPTICAL);
         list.add(SHAPE_SPIRAL);
+        // mondar: add new map shapes
+        list.add(SHAPE_TEXT);
+        list.add(SHAPE_CLUSTER);
+		list.add(SHAPE_SWIRLCLUSTERS);
+		list.add(SHAPE_GRID);
+		list.add(SHAPE_SPIRALARMS);
+		list.add(SHAPE_MAZE);
+		list.add(SHAPE_SHURIKEN);
+		list.add(SHAPE_BULLSEYE);
+		list.add(SHAPE_LORENZ);
+		list.add(SHAPE_FRACTAL);
         return list;
     }
 	
