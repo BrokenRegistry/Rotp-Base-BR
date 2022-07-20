@@ -1,12 +1,12 @@
 /*
  * Copyright 2015-2020 Ray Fowler
- * 
+ *
  * Licensed under the GNU General Public License, Version 3 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     https://www.gnu.org/licenses/gpl-3.0.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,7 +24,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.awt.Image;
-import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
@@ -41,7 +40,7 @@ import rotp.util.ImageManager;
 
 public class Rotp {
     private static final int MB = 1048576;
-    public static final String version = "22.07.19";
+    public static final String version = "22.07.20";
     public static int IMG_W = 1229;
     public static int IMG_H = 768;
     public static String jarFileName = "rotp-" + version + RotpGovernor.miniSuffix() + ".jar";
@@ -51,7 +50,7 @@ public class Rotp {
     public static boolean countWords = false;
     private static String startupDir = System.getProperty("startupdir");
     private static JFrame frame;
-    public static String releaseId = "Rotp-C-M-X-BR-" + version;
+    public static String releaseId = "Rotp-Base-BR-" + version;
     public static long startMs = System.currentTimeMillis();
     public static long maxHeapMemory = Runtime.getRuntime().maxMemory() / 1048576;
     public static long maxUsedMemory;
@@ -59,7 +58,7 @@ public class Rotp {
     private static float resizeAmt =  -1.0f;
     public static int actualAlloc = -1;
     public static boolean reloadRecentSave = false;
-    
+
     static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     public static void main(String[] args) {
         frame = new JFrame("Remnants of the Precursors");
@@ -104,7 +103,7 @@ public class Rotp {
             resizeAmt();
         }
         else if (UserPreferences.borderless()) {
-            frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             frame.setUndecorated(true);
             resizeAmt();
         }
@@ -206,7 +205,7 @@ public class Rotp {
         } catch (IOException ex) {
             System.err.println("Error attempting restart: ");
             ex.printStackTrace();
-        }            
+        }
     }
     public static void restartFromLowMemory() {
         restartWithMoreMemory(frame, true);
@@ -243,7 +242,7 @@ public class Rotp {
         System.out.println("restarting with MB:"+actualAlloc);
         if (!reload && (actualAlloc < allocMb))
             return false;
-        
+
         try {
             stopIfInsufficientMemory(frame, actualAlloc*9/10);
             String argString = reload ? " reload" : " arg1";
