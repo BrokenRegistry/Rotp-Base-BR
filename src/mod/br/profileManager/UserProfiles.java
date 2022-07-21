@@ -36,7 +36,7 @@ public class UserProfiles extends AbstractProfiles<ClientClasses> {
 	}
 	
 	private static final String BR_GROUP_NAME = "BR";
-	static final BaseMod baseMod = BaseMod.BrokenRegistry;
+	static final BaseMod baseMod = BaseMod.Original;
 	
 	// ==================================================
 	// Constructors and helpers
@@ -158,7 +158,9 @@ public class UserProfiles extends AbstractProfiles<ClientClasses> {
 
 		parameterProfileAction().addLine("MyRandom"
 				, ACTION_RANDOM
-				, "For your customized random! Load by pressing \"R\", add or replace by "
+				, "For your customized random!, add "
+						+ ACTION_RANDOM 
+						+ " to override the \"FullRandom\" and Load by pressing \"R\", add or replace with "
 						+ ACTION_FILE_TO_GUI 
 						+ " to also allow it to be loaded with \"L\"");
 
