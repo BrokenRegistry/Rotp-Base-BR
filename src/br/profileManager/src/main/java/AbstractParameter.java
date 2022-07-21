@@ -129,8 +129,11 @@ public abstract class AbstractParameter<
  	AbstractT<T> value = null;
 	 	if (localEnable.isLoadEnabled()) {
 				// Loop thru profiles, last valid win
-		 	for (String profile : profileNames) {	   
-		 		value = userProfiles.getValue(profile);
+		 	for (String profile : profileNames) {
+		 		AbstractT<T> val = userProfiles.getValue(profile);
+		 		if (val != null) {
+		 			value = val;
+		 		}
 			}
 	  	}
 		return value;

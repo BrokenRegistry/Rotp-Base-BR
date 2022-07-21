@@ -40,15 +40,13 @@ import rotp.util.ImageManager;
 
 public class Rotp {
     private static final int MB = 1048576;
-    public static final String version = "22.07.20";
+    public static final String version = "22.07.21";
     public static int IMG_W = 1229;
     public static int IMG_H = 768;
     public static String jarFileName = "rotp-" + version + RotpGovernor.miniSuffix() + ".jar";
     public static String exeFileName = "rotp-" + version + ".exe";
-//    public static String jarFileName = "rotp-"+RotpGovernor.governorVersion()+RotpGovernor.miniSuffix()+".jar";
-//    public static String exeFileName = "Remnants.exe";
     public static boolean countWords = false;
-    private static String startupDir = System.getProperty("startupdir");
+    private static String startupDir;
     private static JFrame frame;
     public static String releaseId = "Rotp-Base-BR-" + version;
     public static long startMs = System.currentTimeMillis();

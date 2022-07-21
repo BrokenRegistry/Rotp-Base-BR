@@ -32,6 +32,7 @@ import rotp.model.game.NewPlayer;
 import rotp.model.planet.Planet;
 import rotp.model.planet.PlanetType;
 import rotp.model.tech.TechEngineWarp;
+import rotp.ui.UserPreferences;
 import rotp.ui.game.SetupGalaxyUI;
 import rotp.util.Base;
 

@@ -180,6 +180,11 @@ public class GovernorOptionsPanel extends javax.swing.JPanel {
         });
 
         transportMaxTurns.setModel(new javax.swing.SpinnerNumberModel(15, 1, 15, 1));
+        transportMaxTurns.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                transportMaxTurnsStateChanged(evt);
+            }
+        });
         transportMaxTurns.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
             @Override
 			public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
@@ -330,6 +335,11 @@ public class GovernorOptionsPanel extends javax.swing.JPanel {
         });
 
         missileBases.setModel(new javax.swing.SpinnerNumberModel(0, 0, 20, 1));
+        missileBases.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                missileBasesStateChanged(evt);
+            }
+        });
         missileBases.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
             @Override
 			public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
@@ -349,6 +359,11 @@ public class GovernorOptionsPanel extends javax.swing.JPanel {
         });
 
         reserve.setModel(new javax.swing.SpinnerNumberModel(1000, 0, 100000, 10));
+        reserve.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                reserveStateChanged(evt);
+            }
+        });
         reserve.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
             @Override
 			public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
@@ -401,6 +416,11 @@ public class GovernorOptionsPanel extends javax.swing.JPanel {
         });
 
         autoColonyShipCount.setModel(new javax.swing.SpinnerNumberModel(1, 1, 9999, 1));
+        autoColonyShipCount.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                autoColonyShipCountStateChanged(evt);
+            }
+        });
         autoColonyShipCount.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
             @Override
 			public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
@@ -411,6 +431,11 @@ public class GovernorOptionsPanel extends javax.swing.JPanel {
         autoColonyShipCountLabel.setText("Number of colony ships to send");
 
         autoScoutShipCount.setModel(new javax.swing.SpinnerNumberModel(1, 1, 9999, 1));
+        autoScoutShipCount.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                autoScoutShipCountStateChanged(evt);
+            }
+        });
         autoScoutShipCount.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
             @Override
 			public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
@@ -419,6 +444,11 @@ public class GovernorOptionsPanel extends javax.swing.JPanel {
         });
 
         autoAttackShipCount.setModel(new javax.swing.SpinnerNumberModel(1, 1, 9999, 1));
+        autoAttackShipCount.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                autoAttackShipCountStateChanged(evt);
+            }
+        });
         autoAttackShipCount.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
             @Override
 			public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
@@ -606,19 +636,11 @@ public class GovernorOptionsPanel extends javax.swing.JPanel {
 
     private void missileBasesMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_missileBasesMouseWheelMoved
         mouseWheel(missileBases, evt);
-        if (autoApplyToggleButton.isEnabled()) { // BR:
-            GovernorOptions options = GameSession.instance().getGovernorOptions();
-            options.setMinimumMissileBases((Integer)missileBases.getValue());
-        }
     }//GEN-LAST:event_missileBasesMouseWheelMoved
 
     private void reserveMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_reserveMouseWheelMoved
         mouseWheel(reserve, evt);
-        if (autoApplyToggleButton.isEnabled()) { // BR:
-            GovernorOptions options = GameSession.instance().getGovernorOptions();
-            options.setReserve((Integer)reserve.getValue());
-        }
-     }//GEN-LAST:event_reserveMouseWheelMoved
+    }//GEN-LAST:event_reserveMouseWheelMoved
 
     private void completionistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completionistActionPerformed
         performCompletionist();
@@ -626,42 +648,22 @@ public class GovernorOptionsPanel extends javax.swing.JPanel {
 
     private void autoColonyShipCountMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_autoColonyShipCountMouseWheelMoved
         mouseWheel(autoColonyShipCount, evt);
-        if (autoApplyToggleButton.isEnabled()) { // BR:
-            GovernorOptions options = GameSession.instance().getGovernorOptions();
-            options.setAutoColonyShipCount((Integer)autoColonyShipCount.getValue());
-        }
     }//GEN-LAST:event_autoColonyShipCountMouseWheelMoved
 
     private void autoScoutShipCountMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_autoScoutShipCountMouseWheelMoved
         mouseWheel(autoScoutShipCount, evt);
-        if (autoApplyToggleButton.isEnabled()) { // BR:
-            GovernorOptions options = GameSession.instance().getGovernorOptions();
-            options.setAutoScoutShipCount((Integer)autoScoutShipCount.getValue());
-        }
     }//GEN-LAST:event_autoScoutShipCountMouseWheelMoved
 
     private void autoAttackShipCountMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_autoAttackShipCountMouseWheelMoved
         mouseWheel(autoAttackShipCount, evt);
-        if (autoApplyToggleButton.isEnabled()) { // BR:
-            GovernorOptions options = GameSession.instance().getGovernorOptions();
-            options.setAutoAttackShipCount((Integer)autoAttackShipCount.getValue());
-        }
     }//GEN-LAST:event_autoAttackShipCountMouseWheelMoved
 
     private void transportMaxTurnsLabelMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_transportMaxTurnsLabelMouseWheelMoved
         mouseWheel(transportMaxTurns, evt);
-        if (autoApplyToggleButton.isEnabled()) { // BR:
-            GovernorOptions options = GameSession.instance().getGovernorOptions();
-            options.setTransportMaxTurns((Integer)transportMaxTurns.getValue());
-        }
     }//GEN-LAST:event_transportMaxTurnsLabelMouseWheelMoved
 
     private void transportMaxTurnsMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_transportMaxTurnsMouseWheelMoved
         mouseWheel(transportMaxTurns, evt);
-        if (autoApplyToggleButton.isEnabled()) { // BR:
-            GovernorOptions options = GameSession.instance().getGovernorOptions();
-            options.setTransportMaxTurns((Integer)transportMaxTurns.getValue());
-        }
     }//GEN-LAST:event_transportMaxTurnsMouseWheelMoved
 
     private void autoApplyToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoApplyToggleButtonActionPerformed
@@ -746,6 +748,47 @@ public class GovernorOptionsPanel extends javax.swing.JPanel {
     private void stargateOnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stargateOnActionPerformed
         if (autoApplyToggleButton.isEnabled()) applyStargates(); // BR:
     }//GEN-LAST:event_stargateOnActionPerformed
+    private void reserveStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_reserveStateChanged
+        if (autoApplyToggleButton.isEnabled()) { // BR:
+            GovernorOptions options = GameSession.instance().getGovernorOptions();
+            options.setReserve((Integer)reserve.getValue());
+        }
+    }//GEN-LAST:event_reserveStateChanged
+
+    private void missileBasesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_missileBasesStateChanged
+        if (autoApplyToggleButton.isEnabled()) { // BR:
+            GovernorOptions options = GameSession.instance().getGovernorOptions();
+            options.setMinimumMissileBases((Integer)missileBases.getValue());
+        }
+    }//GEN-LAST:event_missileBasesStateChanged
+
+    private void autoAttackShipCountStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_autoAttackShipCountStateChanged
+        if (autoApplyToggleButton.isEnabled()) { // BR:
+            GovernorOptions options = GameSession.instance().getGovernorOptions();
+            options.setAutoAttackShipCount((Integer)autoAttackShipCount.getValue());
+        }
+    }//GEN-LAST:event_autoAttackShipCountStateChanged
+
+    private void autoColonyShipCountStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_autoColonyShipCountStateChanged
+        if (autoApplyToggleButton.isEnabled()) { // BR:
+            GovernorOptions options = GameSession.instance().getGovernorOptions();
+            options.setAutoColonyShipCount((Integer)autoColonyShipCount.getValue());
+        }
+    }//GEN-LAST:event_autoColonyShipCountStateChanged
+
+    private void autoScoutShipCountStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_autoScoutShipCountStateChanged
+        if (autoApplyToggleButton.isEnabled()) { // BR:
+            GovernorOptions options = GameSession.instance().getGovernorOptions();
+            options.setAutoScoutShipCount((Integer)autoScoutShipCount.getValue());
+        }
+    }//GEN-LAST:event_autoScoutShipCountStateChanged
+
+    private void transportMaxTurnsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_transportMaxTurnsStateChanged
+        if (autoApplyToggleButton.isEnabled()) { // BR:
+            GovernorOptions options = GameSession.instance().getGovernorOptions();
+            options.setTransportMaxTurns((Integer)transportMaxTurns.getValue());
+        }
+    }//GEN-LAST:event_transportMaxTurnsStateChanged
     private static void mouseWheel(JSpinner spinner, java.awt.event.MouseWheelEvent evt) {
         if (evt.getScrollType() != MouseWheelEvent.WHEEL_UNIT_SCROLL) {
             return;

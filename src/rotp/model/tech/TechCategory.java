@@ -247,9 +247,9 @@ public final class TechCategory implements Base, Serializable {
                 found = true;
 			}
             // BR: always add in Control Irradiated Tech
-			// if the ALWAYS_THORIUM option in UserPreferences (Remnants.cfg) is set to YES
-			// for tech category Propulsion, index = 4
-			// tech level 41, quintile i = 8
+			// if the ALWAYS_IRRIDIATED option in UserPreferences (Remnants.cfg) is set to YES
+			// for tech category Planetary, index = 3
+			// tech level 18, quintile i = 6
 			if ((index == 3) && (i == 6) && UserPreferences.alwaysIrradiated()) {
 				String IrradiatedId = "ControlEnvironment:6";
 				addPossibleTech(IrradiatedId);

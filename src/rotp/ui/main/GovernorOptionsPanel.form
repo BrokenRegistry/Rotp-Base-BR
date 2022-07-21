@@ -238,6 +238,7 @@
             </Property>
           </Properties>
           <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="transportMaxTurnsStateChanged"/>
             <EventHandler event="mouseWheelMoved" listener="java.awt.event.MouseWheelListener" parameters="java.awt.event.MouseWheelEvent" handler="transportMaxTurnsMouseWheelMoved"/>
           </Events>
         </Component>
@@ -398,6 +399,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="missileBasesStateChanged"/>
         <EventHandler event="mouseWheelMoved" listener="java.awt.event.MouseWheelListener" parameters="java.awt.event.MouseWheelEvent" handler="missileBasesMouseWheelMoved"/>
       </Events>
     </Component>
@@ -422,6 +424,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="reserveStateChanged"/>
         <EventHandler event="mouseWheelMoved" listener="java.awt.event.MouseWheelListener" parameters="java.awt.event.MouseWheelEvent" handler="reserveMouseWheelMoved"/>
       </Events>
     </Component>
@@ -479,6 +482,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="autoColonyShipCountStateChanged"/>
         <EventHandler event="mouseWheelMoved" listener="java.awt.event.MouseWheelListener" parameters="java.awt.event.MouseWheelEvent" handler="autoColonyShipCountMouseWheelMoved"/>
       </Events>
     </Component>
@@ -494,6 +498,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="autoScoutShipCountStateChanged"/>
         <EventHandler event="mouseWheelMoved" listener="java.awt.event.MouseWheelListener" parameters="java.awt.event.MouseWheelEvent" handler="autoScoutShipCountMouseWheelMoved"/>
       </Events>
     </Component>
@@ -504,6 +509,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="autoAttackShipCountStateChanged"/>
         <EventHandler event="mouseWheelMoved" listener="java.awt.event.MouseWheelListener" parameters="java.awt.event.MouseWheelEvent" handler="autoAttackShipCountMouseWheelMoved"/>
       </Events>
     </Component>
@@ -517,7 +523,7 @@
         <Property name="text" type="java.lang.String" value="Number of attack ships to send"/>
       </Properties>
     </Component>
-      <Component class="javax.swing.JButton" name="applyButton">
+    <Component class="javax.swing.JButton" name="applyButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Apply"/>
       </Properties>
@@ -527,7 +533,7 @@
     </Component>
     <Component class="javax.swing.JToggleButton" name="autoApplyToggleButton">
       <Properties>
-         <Property name="selected" type="boolean" value="true"/>
+        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Auto Apply"/>
       </Properties>
       <Events>

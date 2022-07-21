@@ -29,6 +29,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.List;
+
 import javax.swing.SwingUtilities;
 
 import rotp.mod.br.profiles.Profiles;
@@ -841,5 +842,5 @@ public class StartOptionsUI extends BasePanel implements MouseListener, MouseMot
         else if (hoverBox == techTradingText.bounds())
             toggleTechTrading(up);
     }
-
+    	 
 }

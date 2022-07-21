@@ -267,7 +267,7 @@ public abstract class AbstractProfiles<C> extends WriteUtil {
 			for ( AbstractGroup<C> g : groupMap.values()) {
 				g.overrideGuiParameters(clientObject, settingKeys);
 			}
-			return;
+			// return; // Need to be finished with local group!
 		}
 		currentGroup = groupMap.get(group.toUpperCase());
 		currentGroup.overrideGuiParameters(clientObject, settingKeys);

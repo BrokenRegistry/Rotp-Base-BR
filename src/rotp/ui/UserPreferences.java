@@ -82,8 +82,8 @@ public class UserPreferences {
     private static int retreatRestrictionTurns = 100; //xilmi: When retreat-restrictions are enabled for how many turns
     private static boolean autoColonize = false;
     private static boolean divertColonyExcessToResearch = true;
-    private static boolean xilmiRoleplayMode = false;
     private static boolean disableAdvisor = true;
+    private static boolean xilmiRoleplayMode = false;
     private static String autoBombardMode = AUTOBOMBARD_NO;
     private static String displayMode = BORDERLESS_MODE;
     private static String graphicsMode = GRAPHICS_HIGH;
@@ -138,7 +138,7 @@ public class UserPreferences {
     }
     // modnar: set MOD option to defaults, specifically for UI
     public static void setModToDefault() {
-        customDifficulty = 180; // mondar: add custom difficulty level option, in units of percent
+        customDifficulty = 100; // mondar: add custom difficulty level option, in units of percent
         dynamicDifficulty = false; // modnar: add dynamic difficulty option, change AI colony production
         alwaysStarGates = false; // modnar: add option to always have Star Gates tech
         alwaysThorium = false; // modnar: add option to always have Thorium Cells tech
@@ -310,7 +310,7 @@ public class UserPreferences {
     	dynamicDifficulty = newValue; 
     } // \BR
 
-    public static void toggleAlwaysIrradiateds() { alwaysIrradiated = !alwaysIrradiated; save(); } // BR
+    public static void toggleAlwaysIrradiated() { alwaysIrradiated = !alwaysIrradiated; save(); } // BR
     // modnar: MOD option toggles, specifically for UI
     public static void toggleAlwaysStarGates()       { alwaysStarGates = !alwaysStarGates; save(); }
     public static void toggleAlwaysThorium()         { alwaysThorium = !alwaysThorium; save(); }
@@ -323,7 +323,7 @@ public class UserPreferences {
 	        else
 	            companionWorlds++;
     	} else {
-	        if ((companionWorlds >= 6) || (companionWorlds < -4)) // BR: changed to 6; default = 4
+	        if ((companionWorlds > 6) || (companionWorlds <= -4)) // BR: changed to 6; default = 4
 	            companionWorlds = 6; // BR: changed to -4; default = 0
 	        else
 	            companionWorlds--;    		
@@ -517,8 +517,8 @@ public class UserPreferences {
     public static boolean governorAutoApply() { return governorAutoApply; } // BR:
     public static void setDivertColonyExcessToResearch(boolean divertOn)  {divertColonyExcessToResearch = divertOn; save(); }
     public static boolean divertColonyExcessToResearch()  { return divertColonyExcessToResearch; }
+    public static boolean disableAdvisor() { return disableAdvisor; }
     public static boolean xilmiRoleplayMode() { return xilmiRoleplayMode; }
-    public static boolean disableAdvisor()    { return disableAdvisor; }
     public static void uiTexturePct(int i)    { uiTexturePct = i / 100.0f; }
     public static float uiTexturePct()        { return uiTexturePct; }
 
@@ -566,6 +566,7 @@ public class UserPreferences {
             out.println(keyFormat("DISPLAY_YEAR")+ yesOrNo(displayYear));
             out.println(keyFormat("DEFAULT_MAX_BASES") + defaultMaxBases);
             out.println(keyFormat("GOVERNOR_ON_BY_DEFAULT") + yesOrNo(governorOnByDefault));
+            out.println(keyFormat("AUTOSPEND_ON_BY_DEFAULT") + yesOrNo(governorAutoSpendByDefault));
             out.println(keyFormat("DIVERT_COLONY_EXCESS_TO_RESEARCH")+ yesOrNo(divertColonyExcessToResearch));
             out.println(keyFormat("XILMI_ROLEPLAY_MODE") + yesOrNo(xilmiRoleplayMode));
             out.println(keyFormat("GOVERNOR_AUTO_APPLY") + yesOrNo(governorAutoApply)); // BR:
@@ -626,6 +627,8 @@ public class UserPreferences {
             case "SHOW_MEMORY":  showMemory = yesOrNo(val); return;
             case "DISPLAY_YEAR": displayYear = yesOrNo(val); return;
             case "DEFAULT_MAX_BASES": defaultMaxBases = Integer.valueOf(val); return;
+            case "GOVERNOR_ON_BY_DEFAULT": governorOnByDefault = yesOrNo(val); return;
+            case "AUTOSPEND_ON_BY_DEFAULT": governorAutoSpendByDefault = yesOrNo(val); return;
             case "DIVERT_COLONY_EXCESS_TO_RESEARCH": divertColonyExcessToResearch = yesOrNo(val); return;
             case "XILMI_ROLEPLAY_MODE": xilmiRoleplayMode = yesOrNo(val); return;
             case "GOVERNOR_AUTO_APPLY": governorAutoApply = yesOrNo(val); return; // BR:
