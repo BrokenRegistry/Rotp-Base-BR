@@ -16,7 +16,10 @@ Download build: https://rayfowler.itch.io/remnants-of-the-precursors
 
 ## What'New
 
-2026.07.21
+2022.07.22
+  - Minor bugs correction
+
+2022.07.21
   - Added Governor. (as it doesn't affect the game file) 
   - Added Modnar GUI.
   - Added Modnar Always Star Gates.
@@ -34,22 +37,22 @@ Download build: https://rayfowler.itch.io/remnants-of-the-precursors
   - Added Random Events Starting Year.
   - Added total mouse control to Modnar and Advanced GUI
 
-2026.07.15
+2022.07.15
   - Changing Player Race: Fixed Technology tree re-generation.
 
-2026.07.13
+2022.07.13
   - Corrected Flag Initialization bug.
 
-2026.07.05
+2022.07.05
   - Added secondary options for Galaxy shapes.
   - Added possibility to hide parameters in Profiles.cfg
 
-2026.07.01
+2022.07.01
   - Junit test integration to github
   - Pom file normalization
   - Minor bugs solved
 
-2026.06.29
+2022.06.29
   - Copy of 1.04 Vanilla code
   - Added Profiles Manager
   - Added add-ons
