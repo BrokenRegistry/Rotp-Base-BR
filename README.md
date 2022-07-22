@@ -17,6 +17,9 @@ Download build: https://rayfowler.itch.io/remnants-of-the-precursors
 ## What'New
 
 2022.07.22
+  - Retreat Restriction Current value now displayed as text instead of integer.
+
+2022.07.22
   - Minor bugs correction
   - Auto generated Profiles.cfg: Removed the "surprise"-action from "MyRandom" for a better feeling in initial random testing!
 
